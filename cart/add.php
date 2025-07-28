@@ -44,5 +44,5 @@ if (isset($_GET["id"])) {
 
     }
 }
-header('location:view.php')
+header('location:cart/view.php')
 ?>

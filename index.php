@@ -27,8 +27,7 @@ require_once("config/config.php")
             echo '<div class="card-body">';
             echo '<h5 class="card-title">' . $row['name'] . '</h5>';
             echo '<p class="card-text">৳ ' . $row['price'] . '</p>';
-            echo '<a href="cart/add.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Add to Cart</a>
-';
+            echo '<a href="cart/add.php?id=<?php echo $row['id']; ?>" class="btn btn-primary">Add to Cart</a>';
             echo '</div></div></div>';
         }
         ?>
