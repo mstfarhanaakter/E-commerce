@@ -70,10 +70,12 @@
 
 
     <!-- Back to Top -->
-    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
-
+<a href="#" class="btn btn-primary back-to-top position-fixed d-flex align-items-center justify-content-center">
+    <i class="fa fa-angle-double-up"></i>
+</a>
 
     <!-- JavaScript Libraries -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script src="lib/easing/easing.min.js"></script>
@@ -85,6 +87,9 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!--  -->
+    <script src="script.js"></script>
 </body>
 
 </html>

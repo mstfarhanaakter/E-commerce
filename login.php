@@ -1,3 +1,39 @@
+<?php
+session_start();
+require "config/db.php"; // Database connection
+
+$msg = "";
+
+// Login handling
+if (isset($_POST["submit"])) {
+    $email    = mysqli_real_escape_string($con, $_POST["email"]);
+    $password = $_POST["pass"];
+
+    // Step 1: Check user by email
+    $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
+    $result = mysqli_query($con, $sql);
+
+    if (mysqli_num_rows($result) === 1) {
+        $row = mysqli_fetch_assoc($result);
+        $stored_password = $row["password"]; // Hashed password
+
+        // Step 2: Verify password
+        if (password_verify($password, $stored_password)) {
+            // Step 3: Create session
+            $_SESSION["user_id"]    = $row["id"];
+            $_SESSION["first_name"] = $row["first_name"];
+            $_SESSION["email"]      = $row["email"];
+
+            header("Location: indexfile.php");
+            exit;
+        } else {
+            $msg = "Invalid email or password!";
+        }
+    } else {
+        $msg = "Invalid email or password!";
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +41,25 @@
     <title>Login</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
     <style> 
-    .form-title {
+        .form-title {
             font-family: "MV Boli", cursive;
             color: #052A75;
         }
-        </style>
+        .input-icon {
+            position: relative;
+        }
+        .input-icon i {
+            position: absolute;
+            top: 50%;
+            right: 15px;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body class="bg-light">
 
@@ -30,20 +79,21 @@
         <!-- Welcome Message -->
         <p class="form-title text-center text-secondary fw-bold mb-3">
             Welcome back! Please log in.
-           
-            <?php echo isset($msg) ? "<span class='text-danger'>" . $msg . "</span>" : ""; ?>
+            <?php if (!empty($msg)) echo "<br><span class='text-danger'>$msg</span>"; ?>
         </p>
 
         <!-- Input Fields -->
         <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Your Username" name="user" required>
+            <input type="text" class="form-control" placeholder="Your Email" name="email" required>
         </div>
-        <div class="mb-3">
-            <input type="password" class="form-control" placeholder="Your Password" name="pass" required>
+        <!-- Password Field with Eye Icon -->
+        <div class="mb-3 position-relative">
+            <input type="password" class="form-control" name="pass" id="pass" placeholder="Your Password" required>
+            <i class="fa-solid fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePass"></i>
         </div>
 
         <!-- Forgot Password -->
-        <p class="text-center mb-3 border-black">
+        <p class="text-center mb-3">
             Need a new password? <a href="forget_pass.php">Click here.</a>
         </p>
 
@@ -54,35 +104,21 @@
     </form>
 </div>
 
-<!-- Bootstrap JS Bundle -->
+<!-- Toggle Password Script -->
+<script>
+    const togglePass = document.getElementById("togglePass");
+    const passField = document.getElementById("pass");
+
+    togglePass.addEventListener("click", () => {
+        const isPassword = passField.type === "password";
+        passField.type = isPassword ? "text" : "password";
+
+        togglePass.classList.toggle("fa-eye");
+        togglePass.classList.toggle("fa-eye-slash");
+    });
+</script>
+
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
 </body>
-
-
-<?php
-session_start();
-
-if (isset($_POST["submit"])) {
-    $username = trim($_POST["user"]);
-    $password = $_POST["pass"];
-
-    $users = file("auth.txt", FILE_IGNORE_NEW_LINES);
-
-    foreach ($users as $user) {
-        $parts = explode("|", $user);
-        if (count($parts) < 2) continue;
-
-        $stored_user = trim($parts[0]);
-        $stored_password = trim($parts[1]);
-
-        if ($username === $stored_user && password_verify($password, $stored_password)) {
-            $_SESSION["username"] = $stored_user;
-            header("Location: index.php");
-            exit;
-        }
-    }
-
-    $msg = "Invalid username or password!";
-}
-?>
+</html>

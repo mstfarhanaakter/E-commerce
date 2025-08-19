@@ -1,16 +1,62 @@
+<?php
+session_start();
+require "config/db.php"; // Database connection
+
+$msg = "";
+
+// Handle form submission
+if (isset($_POST['submit'])) {
+    $first_name = mysqli_real_escape_string($con, $_POST['f_name']);
+    $last_name  = mysqli_real_escape_string($con, $_POST['l_name']);
+    $email      = mysqli_real_escape_string($con, $_POST['email']);
+    $password   = $_POST['pass'];
+    $repass     = $_POST['repass'];
+
+    // 1. Check if passwords match
+    if ($password !== $repass) {
+        $msg = "Passwords do not match!";
+    } else {
+        // 2. Check if email already exists
+        $check = "SELECT id FROM users WHERE email='$email'";
+        $result = mysqli_query($con, $check);
+
+        if (mysqli_num_rows($result) > 0) {
+            $msg = "Email already registered!";
+        } else {
+            // 3. Hash password
+            $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+
+            // 4. Insert new user
+            $query = "INSERT INTO users (first_name, last_name, email, password) 
+                      VALUES ('$first_name', '$last_name', '$email', '$hashPassword')";
+
+            if (mysqli_query($con, $query)) {
+                // Set session variables
+                $user_id = mysqli_insert_id($con);
+                $_SESSION['user_id'] = $user_id;
+                $_SESSION['first_name'] = $first_name;
+                $_SESSION['email'] = $email;
+
+                // Redirect to homepage after signup
+                header("Location: indexfile.php");
+                exit;
+            } else {
+                $msg = "Database error: " . mysqli_error($con);
+            }
+        }
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <title>Signup Form</title>
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Font Awesome for Eye Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
     <style>
         body {
             background-color: #f9f9f9;
@@ -27,16 +73,6 @@
 
         .form-title {
             font-family: "MV Boli", cursive;
-            color: #052A75;
-        }
-
-        .form-subtext {
-            font-family: "Lucida Handwriting", cursive;
-        }
-
-        .form-check-label {
-            font-family: "MV Boli", cursive;
-            font-weight: bold;
             color: #052A75;
         }
 
@@ -63,43 +99,44 @@
             right: 15px;
             transform: translateY(-50%);
             cursor: pointer;
-            /* color: #FFC800; */
         }
     </style>
 </head>
 
 <body>
 
-    <?php
-    echo isset($msg) ? "<div class='text-center text-danger'>$msg</div>" : "";
-    ?>
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-    <form action="#" method="post" class="bg-white p-5 rounded-4 shadow" style="width: 100%; max-width: 400px;">
-        
-        <!-- Logo + Tagline Side by Side -->
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <form action="" method="post" class="bg-white p-5 rounded-4 shadow" style="width: 100%; max-width: 400px;">
+        <!-- Logo + Tagline -->
         <div class="d-flex align-items-center justify-content-center mb-4 gap-3">
             <img src="assets/img/chick.png" alt="Chick" width="50">
             <p class="form-title m-0 fw-bold text-secondary">Be bold. Be first. Sign up!</p>
         </div>
 
+        <!-- Display message -->
+        <?php if(!empty($msg)): ?>
+            <div class="text-center text-danger mb-3"><?php echo $msg; ?></div>
+        <?php endif; ?>
+
         <div class="mb-3">
-            <input type="text" class="form-control" name="user" placeholder="Your Username" required>
+            <input type="text" class="form-control" name="f_name" placeholder="First Name" required>
         </div>
-
-        <!-- Password Field with Eye Icon -->
-        <div class="mb-3 position-relative">
-            <input type="password" class="form-control" name="pass" id="pass" placeholder="Your Password" required>
-            <i class="fa-solid fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePass" style="cursor: pointer;"></i>
+        <div class="mb-3">
+            <input type="text" class="form-control" name="l_name" placeholder="Last Name" required>
         </div>
-
-        <!-- Confirm Password Field with Eye Icon -->
-        <div class="mb-3 position-relative">
-            <input type="password" class="form-control" name="repass" id="repass" placeholder="Confirm Your Password" required>
-            <i class="fa-solid fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="toggleRepass" style="cursor: pointer;"></i>
-        </div>
-
         <div class="mb-3">
             <input type="email" class="form-control" name="email" placeholder="Your Email" required>
+        </div>
+
+        <!-- Password Field -->
+        <div class="mb-3 position-relative">
+            <input type="password" class="form-control" name="pass" id="pass" placeholder="Your Password" required>
+            <i class="fa-solid fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePass"></i>
+        </div>
+        <!-- Confirm Password Field -->
+        <div class="mb-3 position-relative">
+            <input type="password" class="form-control" name="repass" id="repass" placeholder="Confirm Password" required>
+            <i class="fa-solid fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="toggleRepass"></i>
         </div>
 
         <p class="text-center small">
@@ -112,62 +149,26 @@
     </form>
 </div>
 
+<!-- Toggle Password Script -->
+<script>
+    function togglePassword(inputId, iconId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
 
-    <!-- PHP Signup Logic -->
-    <?php
-    if (isset($_POST['submit'])) {
-        $username = $_POST['user'];
-        $password = $_POST['pass'];
-        $repass = $_POST['repass'];
-        $email = $_POST['email'];
+        icon.addEventListener("click", () => {
+            const isPassword = input.type === "password";
+            input.type = isPassword ? "text" : "password";
 
-        // Check if passwords match
-        if ($password !== $repass) {
-            echo "<div class='text-center text-danger mt-3'>Passwords do not match!</div>";
-            exit;
-        }
-
-        $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        // Check for duplicate email
-        $users = file("auth.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-        foreach ($users as $user) {
-            list($stored_user, $stored_password, $stored_email) = explode("|", $user);
-            if ($email === $stored_email) {
-                echo "<div class='text-center text-danger mt-3'>Email already registered!</div>";
-                exit;
-            }
-        }
-
-        // Save user
-        $data = "$username|$hashPassword|$email\n";
-        file_put_contents("auth.txt", $data, FILE_APPEND);
-        header("Location: login.php");
-        exit;
+            icon.classList.toggle("fa-eye");
+            icon.classList.toggle("fa-eye-slash");
+        });
     }
-    ?>
 
-    <!-- Toggle Password Script -->
-    <script>
-        function togglePassword(inputId, iconId) {
-            const input = document.getElementById(inputId);
-            const icon = document.getElementById(iconId);
+    togglePassword("pass", "togglePass");
+    togglePassword("repass", "toggleRepass");
+</script>
 
-            icon.addEventListener("click", () => {
-                const isPassword = input.type === "password";
-                input.type = isPassword ? "text" : "password";
-
-                icon.classList.toggle("fa-eye");
-                icon.classList.toggle("fa-eye-slash");
-            });
-        }
-
-        togglePassword("pass", "togglePass");
-        togglePassword("repass", "toggleRepass");
-    </script>
-
-    <!-- Bootstrap JS (Optional for interactivity) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

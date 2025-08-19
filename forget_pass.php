@@ -1,3 +1,41 @@
+<?php
+session_start();
+require "config/db.php";
+
+if (isset($_POST['submit'])) {
+    $email = mysqli_real_escape_string($con, $_POST['email']);
+
+    // Check if email exists
+    $query = "SELECT id FROM users WHERE email='$email' LIMIT 1";
+    $result = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($result) === 1) {
+        $row = mysqli_fetch_assoc($result);
+        $user_id = $row['id'];
+
+        // Generate unique token
+        $token = bin2hex(random_bytes(50));
+        $expire = date("Y-m-d H:i:s", strtotime('+1 hour')); // 1 hour expiry
+
+        // Save token and expiry in DB
+        $update = "UPDATE users SET reset_token='$token', token_expire='$expire' WHERE id='$user_id'";
+        mysqli_query($con, $update);
+
+        // Prepare reset link
+        $reset_link = "http://yourdomain.com/reset_password.php?token=$token";
+
+        // Send email (placeholder)
+        // mail($email, "Password Reset", "Click here to reset: $reset_link");
+
+        $msg = "If the email is registered, a password reset link has been sent.";
+    } else {
+        // Generic message for security
+        $msg = "If the email is registered, a password reset link has been sent.";
+    }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -46,22 +84,3 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
-<?php
-if (isset($_POST['submit'])) {
-    $email = trim($_POST['email']);
-    $users = file("auth.txt", FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-    $found = false;
-
-    foreach ($users as $user) {
-        $parts = explode("|", $user);
-        if (count($parts) >= 3 && trim($parts[2]) === $email) {
-            $found = true;
-            break;
-        }
-    }
-
-    // This message is intentionally vague for security
-    $msg = "If the email is registered, a password reset link has been sent.";
-}
-?>
