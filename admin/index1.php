@@ -73,7 +73,7 @@ if (isset($_POST["submit"])) {
 
         if ($username === $stored_user && password_verify($password, $stored_password)) {
             $_SESSION["username"] = $stored_user;
-            header("Location: index.php");
+            header("Location: main.php");
             exit;
         }
     }
