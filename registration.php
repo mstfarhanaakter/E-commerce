@@ -11,6 +11,7 @@ if (isset($_POST['submit'])) {
     $email      = mysqli_real_escape_string($con, $_POST['email']);
     $password   = $_POST['pass'];
     $repass     = $_POST['repass'];
+    $role_id    = $_POST['role'];  // Getting selected role
 
     // 1. Check if passwords match
     if ($password !== $repass) {
@@ -26,9 +27,9 @@ if (isset($_POST['submit'])) {
             // 3. Hash password
             $hashPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            // 4. Insert new user
-            $query = "INSERT INTO users (first_name, last_name, email, password) 
-                      VALUES ('$first_name', '$last_name', '$email', '$hashPassword')";
+            // 4. Insert new user with selected role
+            $query = "INSERT INTO users (first_name, last_name, email, password, role_id) 
+                      VALUES ('$first_name', '$last_name', '$email', '$hashPassword', '$role_id')";
 
             if (mysqli_query($con, $query)) {
                 // Set session variables
@@ -47,9 +48,9 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <title>Signup Form</title>
@@ -58,56 +59,13 @@ if (isset($_POST['submit'])) {
     <!-- Font Awesome for Eye Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
-        body {
-            background-color: #f9f9f9;
-        }
-
-        .form-container {
-            max-width: 500px;
-            margin: 50px auto;
-            border: 2px solid black;
-            border-radius: 50px 5px 50px 5px;
-            padding: 30px;
-            background-color: white;
-        }
-
-        .form-title {
-            font-family: "MV Boli", cursive;
-            color: #052A75;
-        }
-
-        .btn-custom {
-            background-color: #C99BF7;
-            color: black;
-            font-weight: bold;
-            font-family: Courier;
-            letter-spacing: 2px;
-        }
-
-        .btn-custom:hover {
-            background-color: #6864F7;
-            color: white;
-        }
-
-        .input-icon {
-            position: relative;
-        }
-
-        .input-icon i {
-            position: absolute;
-            top: 50%;
-            right: 15px;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
+        /* Custom styles */
     </style>
 </head>
-
 <body>
 
 <div class="container d-flex justify-content-center align-items-center vh-100">
     <form action="" method="post" class="bg-white p-5 rounded-4 shadow" style="width: 100%; max-width: 400px;">
-        <!-- Logo + Tagline -->
         <div class="d-flex align-items-center justify-content-center mb-4 gap-3">
             <img src="assets/img/chick.png" alt="Chick" width="50">
             <p class="form-title m-0 fw-bold text-secondary">Be bold. Be first. Sign up!</p>
@@ -133,10 +91,26 @@ if (isset($_POST['submit'])) {
             <input type="password" class="form-control" name="pass" id="pass" placeholder="Your Password" required>
             <i class="fa-solid fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="togglePass"></i>
         </div>
+
         <!-- Confirm Password Field -->
         <div class="mb-3 position-relative">
             <input type="password" class="form-control" name="repass" id="repass" placeholder="Confirm Password" required>
             <i class="fa-solid fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="toggleRepass"></i>
+        </div>
+
+        <!-- Role Selection -->
+        <div class="mb-3">
+            <select class="form-control" name="role" required>
+                <option value="" disabled selected>Select Role</option>
+                <?php
+                // Fetch roles from the 'role' table
+                $roleQuery = "SELECT id, name FROM role";
+                $roleResult = mysqli_query($con, $roleQuery);
+                while ($role = mysqli_fetch_assoc($roleResult)) {
+                    echo "<option value='" . $role['id'] . "'>" . ucfirst($role['name']) . "</option>";
+                }
+                ?>
+            </select>
         </div>
 
         <p class="text-center small">
@@ -170,5 +144,6 @@ if (isset($_POST['submit'])) {
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
