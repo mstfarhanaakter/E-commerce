@@ -13,8 +13,8 @@
       </button>
       <div class="collapse" id="productsCollapse">
         <nav class="nav flex-column">
-          <a href="#" class="nav-link">All Products</a>
-          <a href="add_product.php" class="nav-link">Add New</a>
+          <a href="add_product.php" class="nav-link">Insert Product</a>
+          <a href="action_product.php" class="nav-link">All Products</a>
           <a href="#" class="nav-link">Manage Inventory</a>
         </nav>
       </div>
@@ -27,21 +27,13 @@
       </button>
       <div class="collapse" id="categoriesCollapse">
         <nav class="nav flex-column">
+          <a href="add_category.php" class="nav-link">Insert Category</a>
+          <a href="view_category.php" class="nav-link">View Category</a>
+          <a href="sub_category.php" class="nav-link">Add Sub-category</a>
           <a href="#" class="nav-link">All Categories</a>
-          <a href="add_category.php" class="nav-link">Add Category</a>
-        </nav>
-      </div>
+          <a href="#" class="nav-link">All Sub-Categories</a>
 
-      <!-- Sub-categories dropdown -->
-      <button class="btn btn-toggle align-items-center" data-bs-toggle="collapse" data-bs-target="#subcategoriesCollapse"
-        aria-expanded="false" aria-controls="subcategoriesCollapse">
-        <i class="fa fa-tags"></i> Sub-categories
-        <i class="fa fa-chevron-down ms-auto"></i>
-      </button>
-      <div class="collapse" id="subcategoriesCollapse">
-        <nav class="nav flex-column">
-          <a href="#" class="nav-link">All Sub-categories</a>
-          <a href="#" class="nav-link">Add Sub-category</a>
+
         </nav>
       </div>
 
