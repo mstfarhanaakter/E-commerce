@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2025 at 12:22 AM
+-- Generation Time: Aug 20, 2025 at 08:36 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -45,9 +45,18 @@ CREATE TABLE `carts` (
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `file_path` text DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `categories`
+--
+
+INSERT INTO `categories` (`id`, `name`, `file_path`, `created_at`, `updated_at`) VALUES
+(8, 'Shirts ', 'uploads/images/68a569434fe1c6.15429158.jpg', '2025-08-20 12:20:51', '2025-08-20 12:20:51'),
+(10, 'Frock', 'uploads/frock.jpg', '2025-08-20 12:26:44', '2025-08-20 12:26:44');
 
 -- --------------------------------------------------------
 
@@ -202,7 +211,7 @@ CREATE TABLE `payments` (
 
 CREATE TABLE `products` (
   `id` int(11) NOT NULL,
-  `vendor_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
   `price` decimal(15,2) DEFAULT NULL,
   `description` text DEFAULT NULL,
@@ -301,6 +310,14 @@ CREATE TABLE `role` (
   `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `role`
+--
+
+INSERT INTO `role` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(1, 'admin', '2025-08-20 10:19:09', '2025-08-20 10:19:09'),
+(2, 'customer', '2025-08-20 10:20:07', '2025-08-20 10:20:07');
+
 -- --------------------------------------------------------
 
 --
@@ -346,6 +363,7 @@ CREATE TABLE `sales_return` (
 CREATE TABLE `sub_category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `file_path` text DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp()
@@ -409,7 +427,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `address`, `phone_number`, `role_id`, `created_at`, `updated_at`, `reset_token`, `token_expire`) VALUES
-(1, 'Farhana', 'Shetu', 'farhana@gmail.com', '$2y$10$S1IUS6nvdK3OPr5ASkcUDu8ChFC1yngqbD0uyko/NPBfal.0q3ivq', NULL, NULL, NULL, '2025-08-20 01:53:19', '2025-08-20 01:53:19', '5c778baa8dbc815118834b68671415f946e92bf0446db93d3ea6ce5496221691d370cad67095fa70a08e78cb966525b74983', '2025-08-19 23:37:51');
+(1, 'Farhana', 'Shetu', 'farhana@gmail.com', '$2y$10$S1IUS6nvdK3OPr5ASkcUDu8ChFC1yngqbD0uyko/NPBfal.0q3ivq', NULL, NULL, 1, '2025-08-20 01:53:19', '2025-08-20 01:53:19', '5c778baa8dbc815118834b68671415f946e92bf0446db93d3ea6ce5496221691d370cad67095fa70a08e78cb966525b74983', '2025-08-19 23:37:51');
 
 -- --------------------------------------------------------
 
@@ -529,7 +547,7 @@ ALTER TABLE `payments`
 --
 ALTER TABLE `products`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `vendor_id` (`vendor_id`),
+  ADD KEY `vendor_id` (`user_id`),
   ADD KEY `category_id` (`category_id`),
   ADD KEY `sub_category_id` (`sub_category_id`);
 
@@ -649,7 +667,7 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `coupons`
@@ -739,7 +757,7 @@ ALTER TABLE `refunds`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sales_invoice`
@@ -855,7 +873,7 @@ ALTER TABLE `payments`
 -- Constraints for table `products`
 --
 ALTER TABLE `products`
-  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`vendor_id`) REFERENCES `vendors` (`id`),
+  ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
   ADD CONSTRAINT `products_ibfk_3` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_category` (`id`),
   ADD CONSTRAINT `products_ibfk_4` FOREIGN KEY (`sub_category_id`) REFERENCES `purchase` (`id`);
