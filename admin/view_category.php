@@ -1,11 +1,11 @@
-<?php 
+<?php
 require "inc/he.php";  // Include header, sidebar, and navigation files.
 require "inc/sidebar.php";
 require "inc/nav.php";
 require "inc/mobile_sidebar.php";
 
 // Database connection
-require "../config/db.php"; 
+require "../config/db.php";
 
 // Fetch categories from the database
 $query = "SELECT * FROM categories";
@@ -13,7 +13,7 @@ $result = mysqli_query($con, $query);
 
 // Handle any error if database query fails
 if (!$result) {
-    die("Query failed: " . mysqli_error($con));
+  die("Query failed: " . mysqli_error($con));
 }
 ?>
 
@@ -35,20 +35,24 @@ if (!$result) {
           <?php while ($row = mysqli_fetch_assoc($result)): ?>
             <tr class="text-center">
               <td>
-                <img src="<?php echo $row['file_path']; ?>" alt="Category Image" class="img-fluid rounded" style="max-width: 100px; height: auto;">
+                <img src="<?php echo $row['file_path']; ?>" alt="Category Image" class="img-fluid rounded"
+                  style="max-width: 100px; height: auto;">
               </td>
               <td><?php echo htmlspecialchars($row['name']); ?></td>
               <td>
                 <!-- Edit and Delete Actions with Tooltips -->
-                <a href="edit_category.php" id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Category">
+                <a href="edit_category.php" id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm"
+                  data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Category">
                   <i class="fa fa-edit"></i> Edit
                 </a>
-                <a href="delete_category.php" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deleteModal<?php echo $row['id']; ?>" data-bs-placement="top" title="Delete Category">
+                <a href="delete_category.php" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                  data-bs-target="#deleteModal<?php echo $row['id']; ?>" data-bs-placement="top" title="Delete Category">
                   <i class="fa fa-trash"></i> Delete
                 </a>
 
                 <!-- Delete Modal -->
-                <div class="modal fade" id="deleteModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+                <div class="modal fade" id="deleteModal<?php echo $row['id']; ?>" tabindex="-1"
+                  aria-labelledby="deleteModalLabel" aria-hidden="true">
                   <div class="modal-dialog">
                     <div class="modal-content">
                       <div class="modal-header">
@@ -74,7 +78,7 @@ if (!$result) {
 
     <!-- If there are no categories -->
     <?php if (mysqli_num_rows($result) == 0): ?>
-        <div class="alert alert-warning text-center">No categories found.</div>
+      <div class="alert alert-warning text-center">No categories found.</div>
     <?php endif; ?>
   </div>
 </main>
@@ -91,4 +95,4 @@ if (!$result) {
   });
 </script>
 
-<?php require "inc/footer.php"; ?> 
+<?php require "inc/footer.php"; ?>

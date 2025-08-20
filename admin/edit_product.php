@@ -5,7 +5,7 @@ require "inc/nav.php";
 require "inc/mobile_sidebar.php";
 
 // Database connection
-require "../config/db.php"; 
+require "../config/db.php";
 
 // Fetch product details
 $product_id = $_GET['id']; // Get the product ID from the URL
@@ -50,24 +50,28 @@ $categories_result = mysqli_query($con, $categories_query);
         <form action="edit_product.php?id=<?php echo $product['id']; ?>" method="post">
             <div class="mb-3">
                 <label for="name" class="form-label">Product Name</label>
-                <input type="text" class="form-control" name="name" id="name" value="<?php echo $product['name']; ?>" required>
+                <input type="text" class="form-control" name="name" id="name" value="<?php echo $product['name']; ?>"
+                    required>
             </div>
 
             <div class="mb-3">
                 <label for="price" class="form-label">Price</label>
-                <input type="text" class="form-control" name="price" id="price" value="<?php echo $product['price']; ?>" required>
+                <input type="text" class="form-control" name="price" id="price" value="<?php echo $product['price']; ?>"
+                    required>
             </div>
 
             <div class="mb-3">
                 <label for="description" class="form-label">Description</label>
-                <textarea class="form-control" name="description" id="description" rows="4" required><?php echo $product['description']; ?></textarea>
+                <textarea class="form-control" name="description" id="description" rows="4"
+                    required><?php echo $product['description']; ?></textarea>
             </div>
 
             <div class="mb-3">
                 <label for="category" class="form-label">Category</label>
                 <select class="form-control" name="category" id="category" required>
                     <?php while ($category = mysqli_fetch_assoc($categories_result)): ?>
-                        <option value="<?php echo $category['id']; ?>" <?php if ($category['id'] == $product['category_id']) echo 'selected'; ?>>
+                        <option value="<?php echo $category['id']; ?>" <?php if ($category['id'] == $product['category_id'])
+                               echo 'selected'; ?>>
                             <?php echo $category['name']; ?>
                         </option>
                     <?php endwhile; ?>
