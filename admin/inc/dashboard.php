@@ -81,24 +81,8 @@
         </a>
       </div>
     </div>
-    
-    <!-- Earnings Card -->
-    <div class="col">
-      <div class="card border-secondary shadow-sm h-100">
-        <div class="card-body text-center">
-          <div class="mb-2 text-success">
-            <i class="fa fa-dollar-sign fa-3x"></i>
-          </div>
-          <h6 class="card-title fw-semibold">Earnings</h6>
-        </div>
-        <a href="earnings.html" class="card-footer bg-success text-white d-flex align-items-center justify-content-between text-decoration-none">
-          <span class="fw-bold" style="font-family:cursive";>Show Details</span>
-          <i class="fa fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
 
-   
+     
 
     <!-- Completed Orders Card -->
     <div class="col">
@@ -158,6 +142,22 @@
           <h6 class="card-title fw-semibold">Invoice</h6>
         </div>
         <a href="invoices.html" class="card-footer bg-warning text-dark d-flex align-items-center justify-content-between text-decoration-none">
+          <span class="fw-bold" style="font-family:cursive";>Show Details</span>
+          <i class="fa fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Earnings Card -->
+    <div class="col">
+      <div class="card border-secondary shadow-sm h-100">
+        <div class="card-body text-center">
+          <div class="mb-2 text-success">
+            <i class="fa fa-dollar-sign fa-3x"></i>
+          </div>
+          <h6 class="card-title fw-semibold">Earnings</h6>
+        </div>
+        <a href="earnings.html" class="card-footer bg-success text-white d-flex align-items-center justify-content-between text-decoration-none">
           <span class="fw-bold" style="font-family:cursive";>Show Details</span>
           <i class="fa fa-arrow-right"></i>
         </a>
