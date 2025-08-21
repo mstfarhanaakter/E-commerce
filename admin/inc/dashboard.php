@@ -66,6 +66,22 @@
       </div>
     </div>
 
+     <!-- Pending Orders Card -->
+    <div class="col">
+      <div class="card border-secondary shadow-sm h-100">
+        <div class="card-body text-center">
+          <div class="mb-2 text-danger">
+            <i class="fa fa-clock fa-3x"></i>
+          </div>
+          <h6 class="card-title fw-semibold">Pending Orders</h6>
+        </div>
+        <a href="pending-orders.html" class="card-footer bg-danger text-white d-flex align-items-center justify-content-between text-decoration-none">
+          <span class="fw-bold" style="font-family:cursive";>Show Details</span>
+          <i class="fa fa-arrow-right"></i>
+        </a>
+      </div>
+    </div>
+    
     <!-- Earnings Card -->
     <div class="col">
       <div class="card border-secondary shadow-sm h-100">
@@ -82,21 +98,7 @@
       </div>
     </div>
 
-    <!-- Pending Orders Card -->
-    <div class="col">
-      <div class="card border-secondary shadow-sm h-100">
-        <div class="card-body text-center">
-          <div class="mb-2 text-danger">
-            <i class="fa fa-clock fa-3x"></i>
-          </div>
-          <h6 class="card-title fw-semibold">Pending Orders</h6>
-        </div>
-        <a href="pending-orders.html" class="card-footer bg-danger text-white d-flex align-items-center justify-content-between text-decoration-none">
-          <span class="fw-bold" style="font-family:cursive";>Show Details</span>
-          <i class="fa fa-arrow-right"></i>
-        </a>
-      </div>
-    </div>
+   
 
     <!-- Completed Orders Card -->
     <div class="col">
