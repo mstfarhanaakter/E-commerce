@@ -1,5 +1,5 @@
 <!-- Topbar Start -->
-<div class="container-fluid d-none d-lg-block" id="topbar">
+<div class="container-fluid d-none d-lg-block p-1" id="topbar">
     <div class="row bg-secondary py-1 px-xl-5 align-items-center">
 
         <!-- Left: About / Contact / Help / FAQs -->
@@ -23,12 +23,16 @@
         <!-- Right: Sign In / Sign Up / Icons -->
         <div class="col-lg-4 text-right">
             <div class="d-inline-flex align-items-center">
+                 <a href="vendor_index.php" class="btn btn-sm btn-warning mr-2">
+                    <i class="fas fa-store mr-1"></i> <b>Sign As Vendor</b>
+                </a>
                 <a href="login.php" class="btn btn-sm btn-warning mr-2">
-                    <i class="fas fa-sign-in-alt mr-1"></i> <b>Sign in</b>
+                    <i class="fas fa-sign-in-alt mr-1"></i> <b>Sign In</b>
                 </a>
                 <a href="registration.php" class="btn btn-sm btn-warning">
-                    <i class="fas fa-user-plus mr-1"></i> <b>Sign up</b>
+                    <i class="fas fa-user-plus mr-1"></i> <b>Sign Up</b>
                 </a>
+                
             </div>
         </div>
 

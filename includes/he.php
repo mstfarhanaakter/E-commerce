@@ -30,7 +30,7 @@
     <link href="assets/css/style.css" rel="stylesheet">
     <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon"><link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href=".../style.css">
 
 
 </head>
