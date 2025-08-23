@@ -27,19 +27,42 @@ $categories_result = mysqli_query($con, $categories_query);
 if (isset($_POST['submit'])) {
     $user_id = $_SESSION['user_id'];  // Assuming user is logged in
     $name = mysqli_real_escape_string($con, $_POST['name']);
+    $product_image = $_FILES['image']['name'];
+    $product_image_tmp = $_FILES['image']['tmp_name'];
+    $upload_dir = 'products/'; //Directory to store uploaded images
+    $image_path = $upload_dir . basename($product_image);
     $price = mysqli_real_escape_string($con, $_POST['price']);
     $description = mysqli_real_escape_string($con, $_POST['description']);
     $category_id = $_POST['category'];
     $sub_category_id = $_POST['sub_category'];
 
     // Insert product into database
-    $query = "INSERT INTO products (user_id, name, price, description, category_id, sub_category_id) 
-              VALUES ('$user_id', '$name', '$price', '$description', '$category_id', '$sub_category_id')";
+    $query = "INSERT INTO products (user_id, name,images, price, description, category_id, sub_category_id) 
+              VALUES ('$user_id', '$name', '$image', '$price', '$description', '$category_id', '$sub_category_id')";
 
     if (mysqli_query($con, $query)) {
         $msg = "Product added successfully!";
     } else {
         $msg = "Database error: " . mysqli_error($con);
+    }
+
+    // check if an image is uploaded and move it to the server
+    if(move_uploaded_file($product_image_tmp, $image_path))
+        {
+            //Insert the category into the database
+        $query = "INSERT INTO products (name, images) VALUES ('$name', '$image_path')";
+        $result = mysqli_query($con, $query);
+
+        //Check if insertation is successful
+        
+        if($result){
+            $statusMessage = "<div class='alert alert-success'>Product added successfully!</div>";
+        }else{
+            $statusMessage = "<div class='alert alert-danger'>Failed to add products: </div>";
+        }
+
+    }else{
+        $statusMessage = "<div class='alert alert-danger'>Failed to upload image</div>";
     }
 }
 
@@ -67,6 +90,11 @@ $sub_categories_result = mysqli_query($con, $sub_categories_query);
         <div class="mb-3">
             <label for="name" class="form-label">Product Name</label>
             <input type="text" class="form-control" name="name" id="name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Product Image</label>
+            <input type="file" class="form-control" name="image" id="image" required>
         </div>
 
         <div class="mb-3">
@@ -114,7 +142,6 @@ $sub_categories_result = mysqli_query($con, $sub_categories_query);
 </main>
 
 <?php 
-
 require "inc/footer.php";
 ?>
 

@@ -26,7 +26,6 @@ if (!$result) {
       <table class="table table-striped table-hover table-bordered shadow-sm rounded">
         <thead class="thead-dark">
           <tr class="text-center">
-            <th>Category Image</th>
             <th>Category Name</th>
             <th>Actions</th>
           </tr>
@@ -34,10 +33,6 @@ if (!$result) {
         <tbody>
           <?php while ($row = mysqli_fetch_assoc($result)): ?>
             <tr class="text-center">
-              <td>
-                <img src="<?php echo $row['file_path']; ?>" alt="Category Image" class="img-fluid rounded"
-                  style="max-width: 100px; height: auto;">
-              </td>
               <td><?php echo htmlspecialchars($row['name']); ?></td>
               <td>
                 <!-- Edit and Delete Actions with Tooltips -->
@@ -59,6 +54,7 @@ if (!$result) {
                         <h5 class="modal-title" id="deleteModalLabel">Confirm Deletion</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
+                      <br>
                       <div class="modal-body">
                         Are you sure you want to delete this category?
                       </div>

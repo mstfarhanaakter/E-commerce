@@ -29,8 +29,9 @@
       <nav class="nav flex-column">
         <a href="add_category.php" class="nav-link">Insert Category</a>
         <a href="view_category.php" class="nav-link">View Category</a>
-        <a href="sub_category.php" class="nav-link">Add Sub-category</a>
         <a href="#" class="nav-link">All Categories</a>
+        <a href="sub_category.php" class="nav-link">Insert Sub-category</a>
+        <a href="view_subcategory.php" class="nav-link">View Sub-category</a>
         <a href="#" class="nav-link">All Sub-Categories</a>
 
 
