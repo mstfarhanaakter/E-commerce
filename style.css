@@ -1,4 +1,3 @@
-
 .benefit-card {
   border: 2px solid transparent;
   transition: all 0.3s ease;
@@ -17,4 +16,21 @@
 .benefit-card h5 {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.modal-backdrop {
+  z-index: 1040 !important;
+}
+
+.modal {
+  z-index: 1050 !important;
+}
+
+.modal-dialog {
+  margin-top: 10vh;
+}
+
+/* Optional: fix padding issues if main content is under navbar */
+main {
+  padding-top: 80px; /* adjust based on your fixed navbar height */
 }

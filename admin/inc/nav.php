@@ -21,9 +21,8 @@
         <img src="././media/profile.png" alt="Admin" class="profile-img" />
         <span class="ms-2">Admin</span>
       </a>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="adminMenuLink">
+      <ul class="dropdown-menu dropdown-menu-end bg-warning" aria-labelledby="adminMenuLink">
         <li><a class="dropdown-item" href="#"><i class="fa fa-user me-2"></i> Edit Profile</a></li>
-        <li><a class="dropdown-item" href="#"><i class="fa fa-users me-2"></i> Customers</a></li>
         <li>
           <hr class="dropdown-divider" />
         </li>
