@@ -23,10 +23,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 }
 ?>
-
+<!-- dashboard starts here -->
 <main class="p-4">
   <div class="container mt-5">
-    <h2 class="mb-4 text-center">Add New Category</h2>
+    <h2 class="mb-4 text-center">Insert New Category</h2>
 
     <!-- Display status message (success or error) -->
     <?php echo $statusMessage; ?>
@@ -42,5 +42,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
   </div>
 </main>
+<!-- dashboard ends here -->
 
 <?php require "inc/footer.php"; ?>

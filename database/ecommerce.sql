@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2025 at 08:36 AM
+-- Generation Time: Aug 23, 2025 at 08:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,7 +45,6 @@ CREATE TABLE `carts` (
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `file_path` text DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -54,9 +53,10 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `file_path`, `created_at`, `updated_at`) VALUES
-(8, 'Shirts ', 'uploads/images/68a569434fe1c6.15429158.jpg', '2025-08-20 12:20:51', '2025-08-20 12:20:51'),
-(10, 'Frock', 'uploads/frock.jpg', '2025-08-20 12:26:44', '2025-08-20 12:26:44');
+INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
+(11, 'Shirts ', '2025-08-23 10:11:23', '2025-08-23 10:11:23'),
+(12, 'Denim', '2025-08-23 10:41:46', '2025-08-23 10:41:46'),
+(13, 'Pants', '2025-08-23 11:17:17', '2025-08-23 11:17:17');
 
 -- --------------------------------------------------------
 
@@ -164,7 +164,7 @@ CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
   `order_date` datetime DEFAULT NULL,
   `total_price` decimal(15,2) DEFAULT NULL,
-  `customer_id` int(11) DEFAULT NULL,
+  `user_id` int(11) DEFAULT NULL,
   `payment_id` int(11) DEFAULT NULL,
   `status` varchar(255) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
@@ -213,6 +213,7 @@ CREATE TABLE `products` (
   `id` int(11) NOT NULL,
   `user_id` int(11) DEFAULT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `images` text DEFAULT NULL,
   `price` decimal(15,2) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
@@ -316,7 +317,8 @@ CREATE TABLE `role` (
 
 INSERT INTO `role` (`id`, `name`, `created_at`, `updated_at`) VALUES
 (1, 'admin', '2025-08-20 10:19:09', '2025-08-20 10:19:09'),
-(2, 'customer', '2025-08-20 10:20:07', '2025-08-20 10:20:07');
+(2, 'customer', '2025-08-20 10:20:07', '2025-08-20 10:20:07'),
+(3, 'vendor', '2025-08-20 12:41:18', '2025-08-20 12:41:18');
 
 -- --------------------------------------------------------
 
@@ -363,11 +365,19 @@ CREATE TABLE `sales_return` (
 CREATE TABLE `sub_category` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
-  `file_path` text DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sub_category`
+--
+
+INSERT INTO `sub_category` (`id`, `name`, `category_id`, `created_at`, `updated_at`) VALUES
+(1, 'Denim Jeans', 12, '2025-08-23 10:57:05', '2025-08-23 10:57:05'),
+(2, 'Denim Jeans', 11, '2025-08-23 10:58:09', '2025-08-23 10:58:09'),
+(3, 'asass', 13, '2025-08-23 11:19:40', '2025-08-23 11:19:40');
 
 -- --------------------------------------------------------
 
@@ -524,7 +534,7 @@ ALTER TABLE `inventory`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`customer_id`),
+  ADD KEY `customer_id` (`user_id`),
   ADD KEY `payment_id` (`payment_id`);
 
 --
@@ -667,7 +677,7 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `coupons`
@@ -757,7 +767,7 @@ ALTER TABLE `refunds`
 -- AUTO_INCREMENT for table `role`
 --
 ALTER TABLE `role`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `sales_invoice`
@@ -775,7 +785,7 @@ ALTER TABLE `sales_return`
 -- AUTO_INCREMENT for table `sub_category`
 --
 ALTER TABLE `sub_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `total_purchase`
@@ -853,7 +863,7 @@ ALTER TABLE `inventory`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`),
+  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `customers` (`id`),
   ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`);
 
 --
@@ -875,8 +885,7 @@ ALTER TABLE `payments`
 ALTER TABLE `products`
   ADD CONSTRAINT `products_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `products_ibfk_2` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`),
-  ADD CONSTRAINT `products_ibfk_3` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_category` (`id`),
-  ADD CONSTRAINT `products_ibfk_4` FOREIGN KEY (`sub_category_id`) REFERENCES `purchase` (`id`);
+  ADD CONSTRAINT `products_ibfk_3` FOREIGN KEY (`sub_category_id`) REFERENCES `sub_category` (`id`);
 
 --
 -- Constraints for table `purchase`

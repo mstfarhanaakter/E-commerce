@@ -17,6 +17,5 @@ require "inc/mobile_sidebar.php";
 
 
 <?php 
-
 require "inc/footer.php";
 ?>

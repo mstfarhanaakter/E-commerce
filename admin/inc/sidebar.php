@@ -14,7 +14,7 @@
     <div class="collapse" id="productsCollapse">
       <nav class="nav flex-column">
         <a href="add_product.php" class="nav-link">Insert Product</a>
-        <a href="action_product.php" class="nav-link">All Products</a>
+        <a href="view_product.php" class="nav-link">View Products</a>
         <a href="#" class="nav-link">Manage Inventory</a>
       </nav>
     </div>

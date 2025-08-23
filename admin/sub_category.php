@@ -38,7 +38,7 @@ if (isset($_POST['submit'])) {
 
 <main class="p-4">
     <div class="container mt-5">
-        <h2>Add Sub-Category</h2>
+        <h2>Insert Sub-Category</h2>
 
         <!-- Status message -->
         <?php if (!empty($statusMessage)) echo $statusMessage; ?>

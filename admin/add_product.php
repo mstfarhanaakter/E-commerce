@@ -1,92 +1,78 @@
 <?php
+session_start();
+
 require "inc/he.php";
 require "inc/sidebar.php";
 require "inc/nav.php";
 require "inc/mobile_sidebar.php";
-?>
+require "../config/db.php";
 
-<!-- Dashboard Part Starts Here -->
+$statusMessage = "";
 
-<main class="p-4">
-    <!-- <h1>This is my admin Panel</h1> -->
+// Check DB connection
+if (!$con) {
+    die("<div class='alert alert-danger'>Database connection failed: " . mysqli_connect_error() . "</div>");
+}
 
+if (isset($_POST['submit'])) {
+    $user_id = $_SESSION['user_id'] ?? 1;
+    $name = trim($_POST['name']);
+    $price = trim($_POST['price']);
+    $description = trim($_POST['description']);
+    $category_id = $_POST['category'];
+    $sub_category_id = $_POST['sub_category'];
 
-    <!-- dashboard ends here  -->
-    <?php
-    // session_start();
-    require "../config/db.php"; // Ensure $con variable exists
-    
-    $msg = "";
+    // Handle image
+    $upload_dir = 'products/';
+    $image_name = $_FILES['image']['name'];
+    $image_tmp = $_FILES['image']['tmp_name'];
+    $image_size = $_FILES['image']['size'];
+    $image_ext = strtolower(pathinfo($image_name, PATHINFO_EXTENSION));
+    $allowed_ext = ['jpg', 'jpeg', 'png', 'gif'];
 
-    // Fetch categories for the dropdown
-    $categories_query = "SELECT * FROM categories";
-    $categories_result = mysqli_query($con, $categories_query);
+    if (in_array($image_ext, $allowed_ext) && $image_size <= 2 * 1024 * 1024) {
+        $new_image_name = uniqid("img_", true) . '.' . $image_ext;
+        $image_path = $upload_dir . $new_image_name;
 
-    // Handle form submission
-    if (isset($_POST['submit'])) {
-        $user_id = $_SESSION['user_id'];  // Assuming user is logged in
-        $name = mysqli_real_escape_string($con, $_POST['name']);
-        $product_image = $_FILES['image']['name'];
-        $product_image_tmp = $_FILES['image']['tmp_name'];
-        $upload_dir = 'products/'; //Directory to store uploaded images
-        $image_path = $upload_dir . basename($product_image);
-        $price = mysqli_real_escape_string($con, $_POST['price']);
-        $description = mysqli_real_escape_string($con, $_POST['description']);
-        $category_id = $_POST['category'];
-        $sub_category_id = $_POST['sub_category'];
+        if (move_uploaded_file($image_tmp, $image_path)) {
+            // Insert product using prepared statement
+            $stmt = mysqli_prepare($con, "INSERT INTO products (user_id, name, images, price, description, category_id, sub_category_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            mysqli_stmt_bind_param($stmt, "issdsii", $user_id, $name, $image_path, $price, $description, $category_id, $sub_category_id);
 
-        // Insert product into database
-        $query = "INSERT INTO products (user_id, name,images, price, description, category_id, sub_category_id) 
-              VALUES ('$user_id', '$name', '$image', '$price', '$description', '$category_id', '$sub_category_id')";
-
-        if (mysqli_query($con, $query)) {
-            $msg = "Product added successfully!";
-        } else {
-            $msg = "Database error: " . mysqli_error($con);
-        }
-
-        // check if an image is uploaded and move it to the server
-        if (move_uploaded_file($product_image_tmp, $image_path)) {
-            //Insert the category into the database
-            $query = "INSERT INTO products (name, images) VALUES ('$name', '$image_path')";
-            $result = mysqli_query($con, $query);
-
-            //Check if insertation is successful
-    
-            if ($result) {
+            if (mysqli_stmt_execute($stmt)) {
                 $statusMessage = "<div class='alert alert-success'>Product added successfully!</div>";
             } else {
-                $statusMessage = "<div class='alert alert-danger'>Failed to add products: </div>";
+                $statusMessage = "<div class='alert alert-danger'>Database error: " . htmlspecialchars(mysqli_error($con)) . "</div>";
             }
 
+            mysqli_stmt_close($stmt);
         } else {
-            $statusMessage = "<div class='alert alert-danger'>Failed to upload image</div>";
+            $statusMessage = "<div class='alert alert-danger'>Failed to upload image.</div>";
         }
+    } else {
+        $statusMessage = "<div class='alert alert-danger'>Invalid image file. Only JPG, PNG, GIF under 2MB are allowed.</div>";
     }
+}
 
-    // Fetch sub-categories based on the selected category
-    $sub_categories_query = "SELECT * FROM sub_category WHERE category_id = " . (isset($_POST['category']) ? $_POST['category'] : 0);
-    $sub_categories_result = mysqli_query($con, $sub_categories_query);
-    ?>
+// Fetch categories and sub-categories
+$categories_result = mysqli_query($con, "SELECT * FROM categories");
+$sub_categories_result = mysqli_query($con, "SELECT * FROM sub_category");
+?>
 
-    <!DOCTYPE html>
-    <html lang="en">
-
-    <head>
-        <meta charset="UTF-8">
-        <title>Add Product</title>
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    </head>
-
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Product</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <main class="p-4">
         <div class="container mt-5">
-            <h2>Add Product</h2>
+            <h2>Insert Product</h2>
+            <?= $statusMessage ?>
 
-            <?php if (!empty($msg)): ?>
-                <div class="alert alert-info"><?php echo $msg; ?></div>
-            <?php endif; ?>
-
-            <form action="add_product.php" method="post" enctype="multipart/form-data">
+            <form action="<?= htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="name" class="form-label">Product Name</label>
                     <input type="text" class="form-control" name="name" id="name" required>
@@ -99,7 +85,7 @@ require "inc/mobile_sidebar.php";
 
                 <div class="mb-3">
                     <label for="price" class="form-label">Price</label>
-                    <input type="text" class="form-control" name="price" id="price" required>
+                    <input type="number" step="0.01" class="form-control" name="price" id="price" required>
                 </div>
 
                 <div class="mb-3">
@@ -107,24 +93,22 @@ require "inc/mobile_sidebar.php";
                     <textarea class="form-control" name="description" id="description" rows="4" required></textarea>
                 </div>
 
-                <!-- Category Dropdown -->
                 <div class="mb-3">
                     <label for="category" class="form-label">Category</label>
-                    <select class="form-control" name="category" id="category" required onchange="this.form.submit()">
+                    <select class="form-control" name="category" id="category" required>
                         <option value="" disabled selected>Select Category</option>
                         <?php while ($category = mysqli_fetch_assoc($categories_result)): ?>
-                            <option value="<?php echo $category['id']; ?>"><?php echo $category['name']; ?></option>
+                            <option value="<?= $category['id'] ?>"><?= htmlspecialchars($category['name']) ?></option>
                         <?php endwhile; ?>
                     </select>
                 </div>
 
-                <!-- Sub-Category Dropdown -->
                 <div class="mb-3">
                     <label for="sub_category" class="form-label">Sub-Category</label>
                     <select class="form-control" name="sub_category" id="sub_category" required>
                         <option value="" disabled selected>Select Sub-Category</option>
                         <?php while ($sub_category = mysqli_fetch_assoc($sub_categories_result)): ?>
-                            <option value="<?php echo $sub_category['id']; ?>"><?php echo $sub_category['name']; ?></option>
+                            <option value="<?= $sub_category['id'] ?>"><?= htmlspecialchars($sub_category['name']) ?></option>
                         <?php endwhile; ?>
                     </select>
                 </div>
@@ -132,16 +116,10 @@ require "inc/mobile_sidebar.php";
                 <button type="submit" name="submit" class="btn btn-primary">Add Product</button>
             </form>
         </div>
+    </main>
 
-        <!-- Bootstrap JS -->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
 
-    </html>
-
-
-</main>
-
-<?php
-require "inc/footer.php";
-?>
+<?php require "inc/footer.php"; ?>
