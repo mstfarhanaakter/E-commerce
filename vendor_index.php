@@ -100,12 +100,12 @@ require "includes/navbar.php";
 
 <!-- Steps to Start Selling -->
 <div class="bg-secondary text-center p-4">
-  <h3 class="mb-4 text-white">Steps to Start Selling</h3>
+  <h3 class="mb-4 text-dark">Steps to Start Selling</h3>
   <div class="container">
     <div class="row text-start">
       <!-- Left Column -->
       <div class="col-md-6 mb-3">
-        <p class="text-white text-justify">
+        <p class="text-dark text-justify">
           Sign up now to be a DoraMart Seller! DoraMart offers great opportunities and support for you to dive into the
           market and grow your customer base with ease. As a DoraMart Seller, you will get access to various resources
           to help you drive your business on our platform.
@@ -113,7 +113,7 @@ require "includes/navbar.php";
       </div>
       <!-- Right Column -->
       <div class="col-md-6 mb-3">
-        <p class="text-white fw-bold">Steps:</p>
+        <p class="text-dark fw-bold">Steps:</p>
         <p class="card-body bg-white fw-semibold mb-2">1. Sign up with a phone number</p>
         <p class="card-body bg-white fw-semibold mb-2">2. Fill in contact email & address details</p>
         <p class="card-body bg-white fw-semibold mb-2">3. Submit ID and Bank Account details</p>
@@ -155,7 +155,7 @@ require "includes/navbar.php";
   }
 
   .icon-globe {
-    color: #ffc107;
+    color: #201901ff;
   }
 
   .icon-support {

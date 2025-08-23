@@ -24,7 +24,7 @@
         <div class="col-lg-4 text-right">
             <div class="d-inline-flex align-items-center">
                  <a href="vendor_index.php" class="btn btn-sm btn-warning mr-2">
-                    <i class="fas fa-store mr-1"></i> <b>Sign As Vendor</b>
+                    <i class="fas fa-store mr-1"></i> <b>Become A Seller</b>
                 </a>
                 <a href="login.php" class="btn btn-sm btn-warning mr-2">
                     <i class="fas fa-sign-in-alt mr-1"></i> <b>Sign In</b>
