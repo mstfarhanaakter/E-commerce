@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     $stmt->bind_param("si", $name, $categoryId);
 
-    if ($stmt->execute()) {
+    if ($stmt->execute()) {.
       $stmt->close();
       echo "<script>alert('Category updated successfully.'); window.location.href='view_category.php';</script>";
       exit();
