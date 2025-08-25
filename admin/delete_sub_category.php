@@ -1,5 +1,5 @@
 <?php
-require "../config/db.php"; 
+require "../config/db.php";
 
 // Get sub-category ID from URL
 $sub_category_id = $_GET['id'];

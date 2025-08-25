@@ -41,7 +41,8 @@ if (isset($_POST['submit'])) {
         <h2>Insert Sub-Category</h2>
 
         <!-- Status message -->
-        <?php if (!empty($statusMessage)) echo $statusMessage; ?>
+        <?php if (!empty($statusMessage))
+            echo $statusMessage; ?>
 
         <!-- Sub-Category Add Form -->
         <form action="sub_category.php" method="post">

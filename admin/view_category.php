@@ -2,7 +2,7 @@
 // ... (all your existing code above remains the same)
 
 session_start();
-require "inc/he.php";  
+require "inc/he.php";
 require "inc/sidebar.php";
 require "inc/nav.php";
 require "inc/mobile_sidebar.php";
@@ -13,7 +13,7 @@ $query = "SELECT * FROM categories";
 $result = mysqli_query($con, $query);
 
 if (!$result) {
-    die("Query failed: " . mysqli_error($con));
+  die("Query failed: " . mysqli_error($con));
 }
 ?>
 
@@ -41,17 +41,17 @@ if (!$result) {
 
               <!-- Show status -->
               <td>
-                <?php 
-                  // Assuming 'status' is stored as 1 or 0 (or 'active'/'not active')
-                  if (isset($row['status'])) {
-                    if ($row['status'] == 1 || strtolower($row['status']) == 'active') {
-                      echo '<span class="badge bg-success">Active</span>';
-                    } else {
-                      echo '<span class="badge bg-danger">Not Active</span>';
-                    }
+                <?php
+                // Assuming 'status' is stored as 1 or 0 (or 'active'/'not active')
+                if (isset($row['status'])) {
+                  if ($row['status'] == 1 || strtolower($row['status']) == 'active') {
+                    echo '<span class="badge bg-success">Active</span>';
                   } else {
-                    echo '<span class="badge bg-secondary">Unknown</span>';
+                    echo '<span class="badge bg-danger">Not Active</span>';
                   }
+                } else {
+                  echo '<span class="badge bg-secondary">Unknown</span>';
+                }
                 ?>
               </td>
 

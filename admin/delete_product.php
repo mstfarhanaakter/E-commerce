@@ -1,5 +1,5 @@
 <?php
-require "../config/db.php"; 
+require "../config/db.php";
 
 // Get product ID from URL
 $product_id = $_GET['id'];
