@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2025 at 08:05 AM
+-- Generation Time: Aug 25, 2025 at 09:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -45,6 +45,7 @@ CREATE TABLE `carts` (
 CREATE TABLE `categories` (
   `id` int(11) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT 1,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -53,10 +54,10 @@ CREATE TABLE `categories` (
 -- Dumping data for table `categories`
 --
 
-INSERT INTO `categories` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(11, 'Shirts ', '2025-08-23 10:11:23', '2025-08-23 10:11:23'),
-(12, 'Denim', '2025-08-23 10:41:46', '2025-08-23 10:41:46'),
-(13, 'Pants', '2025-08-23 11:17:17', '2025-08-23 11:17:17');
+INSERT INTO `categories` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
+(11, 'Men', 1, '2025-08-23 10:11:23', '2025-08-23 10:11:23'),
+(12, 'Women', 1, '2025-08-23 10:41:46', '2025-08-23 10:41:46'),
+(13, 'Kids', 1, '2025-08-23 11:17:17', '2025-08-23 11:17:17');
 
 -- --------------------------------------------------------
 
@@ -375,9 +376,7 @@ CREATE TABLE `sub_category` (
 --
 
 INSERT INTO `sub_category` (`id`, `name`, `category_id`, `created_at`, `updated_at`) VALUES
-(1, 'Denim Jeans', 12, '2025-08-23 10:57:05', '2025-08-23 10:57:05'),
-(2, 'Denim Jeans', 11, '2025-08-23 10:58:09', '2025-08-23 10:58:09'),
-(3, 'asass', 13, '2025-08-23 11:19:40', '2025-08-23 11:19:40');
+(10, 'Shirts', 11, '2025-08-25 13:11:56', '2025-08-25 13:11:56');
 
 -- --------------------------------------------------------
 
@@ -737,7 +736,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `purchase`
@@ -785,7 +784,7 @@ ALTER TABLE `sales_return`
 -- AUTO_INCREMENT for table `sub_category`
 --
 ALTER TABLE `sub_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `total_purchase`
