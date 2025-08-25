@@ -326,7 +326,7 @@
                         </div>
                         <div class="actions">
                             <button class="btn" disabled><i class="fa-solid fa-ban"></i> Unavailable</button>
-                            <button class="btn"><i class="fa-solid fa-eye"></i> Preview</button>
+                            <button class="btn"><i class="fa-solid fa-eye"></i><a href="./shop_detail.php" class="text-decoration-none text-black">Preview</a> </button>
                         </div>
                     </div>
                 </div>

@@ -9,8 +9,8 @@ require "includes/navbar.php";
 require "includes/banner.php";
 require "includes/feature.php";
 //  require "includes/category.php";
-require "includes/products.php";
-
+// require "includes/products.php";
+require "./product_copy.php";
 
 ?>
 
