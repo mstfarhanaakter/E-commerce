@@ -29,14 +29,19 @@ if (!$result) {
                 <table class="table table-striped table-hover table-bordered shadow-sm rounded">
                     <thead class="thead-dark">
                         <tr class="text-center">
+                            <th>No</th>
                             <th>Sub-Category Name</th>
                             <th>Category</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
+                        <?php
+                        $counter = 1; //initialize the number
+                    
+                        while ($row = mysqli_fetch_assoc($result)): ?>
                             <tr class="text-center">
+                                <td><?php echo $counter++; ?></td>
                                 <td><?php echo htmlspecialchars($row['sub_name']); ?></td>
                                 <td><?php echo htmlspecialchars($row['category_name']); ?></td>
                                 <td>
@@ -54,11 +59,13 @@ if (!$result) {
                                     <!-- Delete Modal -->
                                     <div class="modal fade" id="deleteModal<?php echo $row['id']; ?>" tabindex="-1"
                                         aria-labelledby="deleteModalLabel<?php echo $row['id']; ?>" aria-hidden="true">
-                                        <div class="modal-dialog">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <!-- Added modal-dialog-centered here -->
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="deleteModalLabel<?php echo $row['id']; ?>">
-                                                        Confirm Deletion</h5>
+                                                        Confirm Deletion
+                                                    </h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                         aria-label="Close"></button>
                                                 </div>
@@ -75,6 +82,7 @@ if (!$result) {
                                             </div>
                                         </div>
                                     </div>
+
                                 </td>
                             </tr>
                         <?php endwhile; ?>
