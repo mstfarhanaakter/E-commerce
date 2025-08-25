@@ -93,11 +93,11 @@ foreach ($subcategories as $subcat) {
                                 <i class="fa fa-angle-down mt-1"></i>
                             </a>
                             <ul class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                <li><a href="cart.html" class="dropdown-item">Shopping Cart</a></li>
-                                <li><a href="checkout.html" class="dropdown-item">Checkout</a></li>
+                                <li><a href="#" class="dropdown-item">Shopping Cart</a></li>
+                                <li><a href="#" class="dropdown-item">Checkout</a></li>
                             </ul>
                         </div>
-                        <a href="contact.html" class="nav-item nav-link">Contact</a>
+                        <a href="contact.php" class="nav-item nav-link">Contact</a>
                     </div>
 
                     <!-- Right icons -->

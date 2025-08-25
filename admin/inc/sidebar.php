@@ -1,6 +1,6 @@
 <!-- Desktop Sidebar -->
 <nav class="sidebar-lg d-none d-md-block" id="sidebarDesktop">
-  <h5 class="text-center text-warning">Admin Panel</h5>
+  <h5 class="text-center text-warning"><a href="./main.php" class="text-decoration-none text-warning">Admin Panel</a></h5>
   <nav class="nav flex-column mt-3">
 
     <a href="#" class="nav-link active"><i class="fa fa-home me-2"></i> Dashboard</a>
