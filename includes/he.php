@@ -34,7 +34,7 @@
 
     <!-- new -->
     <link rel="stylesheet" href=".../style.css">
-    <link rel="stylesheet" href=".../products.css">
+    <link rel="stylesheet" href="style.css">
 
 
 </head>

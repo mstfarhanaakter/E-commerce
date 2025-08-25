@@ -1,43 +1,42 @@
-
 <!-- php Heaader, topbar, navbar, banner, feature, category, products start -->
- <?php 
- session_start();
+<?php
+session_start();
 
- require "config/db.php";
- require "includes/he.php";
- require "includes/topbar.php";
- require "includes/navbar.php";
- require "includes/banner.php"; 
- require "includes/feature.php";
- require "includes/category.php";
- require "includes/products.php";
- 
- 
-  ?>
+require "config/db.php";
+require "includes/he.php";
+require "includes/topbar.php";
+require "includes/navbar.php";
+require "includes/banner.php";
+require "includes/feature.php";
+//  require "includes/category.php";
+require "includes/products.php";
+
+
+?>
 
 <!-- php Heaader, topbar, navbar, banner, feature, category, products end -->
 
 
 
-    <!-- Offer Start -->
-    <div class="container-fluid pt-5 pb-3">
-        <div class="row px-xl-5">
-            <div class="col-md-12">
-                <div class="product-offer mb-30" style="height: 300px;">
-                    <img class="mw-100" src="assets/img/offer.jpg" alt="">
-                    <div class="offer-text">
-                        <h6 class="text-white text-uppercase">Save 70%</h6>
-                        <h3 class="text-white mb-3">Special Offer</h3>
-                        <a href="" class="btn btn-primary">Shop Now</a>
-                    </div>
+<!-- Offer Start -->
+<div class="container-fluid pt-5 pb-3">
+    <div class="row px-xl-5">
+        <div class="col-md-12">
+            <div class="product-offer mb-30" style="height: 300px;">
+                <img class="mw-100" src="assets/img/offer.jpg" alt="">
+                <div class="offer-text">
+                    <h6 class="text-white text-uppercase">Save 70%</h6>
+                    <h3 class="text-white mb-3">Special Offer</h3>
+                    <a href="" class="btn btn-primary">Shop Now</a>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Offer End -->
+</div>
+<!-- Offer End -->
 
 
-   <!-- Vendor Start -->
+<!-- Vendor Start -->
 <div class="container-fluid py-5">
     <div class="row px-xl-5">
         <div class="col">
@@ -73,11 +72,6 @@
 <!-- Vendor End -->
 
 
-    <!-- footer start -->
-     <?php require "includes/footer.php"; ?>
-    <!-- footer end -->
-
-
-
-
-    
+<!-- footer start -->
+<?php require "includes/footer.php"; ?>
+<!-- footer end -->
