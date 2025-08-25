@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2025 at 09:30 AM
+-- Generation Time: Aug 25, 2025 at 10:31 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -55,9 +55,12 @@ CREATE TABLE `categories` (
 --
 
 INSERT INTO `categories` (`id`, `name`, `status`, `created_at`, `updated_at`) VALUES
-(11, 'Men', 1, '2025-08-23 10:11:23', '2025-08-23 10:11:23'),
-(12, 'Women', 1, '2025-08-23 10:41:46', '2025-08-23 10:41:46'),
-(13, 'Kids', 1, '2025-08-23 11:17:17', '2025-08-23 11:17:17');
+(11, 'Men\'s & Boys\' Fashion', 1, '2025-08-23 10:11:23', '2025-08-23 10:11:23'),
+(12, 'Women\'s & Girls\' Fashion', 1, '2025-08-23 10:41:46', '2025-08-23 10:41:46'),
+(13, 'Kids', 1, '2025-08-23 11:17:17', '2025-08-23 11:17:17'),
+(14, 'Beauty and Personal Care', 1, '2025-08-25 23:50:43', '2025-08-25 23:50:43'),
+(15, 'Electronics', 1, '2025-08-25 23:51:30', '2025-08-25 23:51:30'),
+(16, 'Home and Kitchen', 1, '2025-08-25 23:51:39', '2025-08-25 23:51:39');
 
 -- --------------------------------------------------------
 
@@ -223,6 +226,16 @@ CREATE TABLE `products` (
   `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `products`
+--
+
+INSERT INTO `products` (`id`, `user_id`, `name`, `images`, `price`, `description`, `category_id`, `sub_category_id`, `created_at`, `updated_at`) VALUES
+(5, 1, 'Shirt', 'products/img_68acbbf98b9d04.76682807.jpg', 455.00, 'This is a cotton shirt', 11, 10, '2025-08-26 01:39:37', '2025-08-26 01:39:37'),
+(6, 1, 'MakeUp', 'products/img_68acbdf316e0a3.67901766.jpg', 345.00, 'This is makeup', 14, 23, '2025-08-26 01:48:03', '2025-08-26 01:48:03'),
+(9, 1, 'Kids Cloth', 'products/img_68acbfc69025c3.87599044.jpg', 123.00, 'This is a conform dress', 13, 19, '2025-08-26 01:55:50', '2025-08-26 01:55:50'),
+(11, 1, 'Kids Cloth', 'products/img_68acc4b6619a87.02615445.jpg', 123.00, 'This is a conform dress', 13, 19, '2025-08-26 02:16:54', '2025-08-26 02:16:54');
+
 -- --------------------------------------------------------
 
 --
@@ -376,7 +389,23 @@ CREATE TABLE `sub_category` (
 --
 
 INSERT INTO `sub_category` (`id`, `name`, `category_id`, `created_at`, `updated_at`) VALUES
-(10, 'Shirts', 11, '2025-08-25 13:11:56', '2025-08-25 13:11:56');
+(10, 'Shirts', 11, '2025-08-25 13:11:56', '2025-08-25 13:11:56'),
+(11, 'Begs', 12, '2025-08-25 23:52:44', '2025-08-25 23:52:44'),
+(12, 'Watches', 11, '2025-08-25 23:52:53', '2025-08-25 23:52:53'),
+(13, 'Muslim Wear', 12, '2025-08-25 23:53:08', '2025-08-25 23:53:08'),
+(14, 'Western Wear', 12, '2025-08-25 23:53:23', '2025-08-25 23:53:23'),
+(15, 'Sunglass', 11, '2025-08-25 23:54:00', '2025-08-25 23:54:00'),
+(18, 'Jeans', 11, '2025-08-25 23:54:29', '2025-08-25 23:54:29'),
+(19, 'Kids Toys', 13, '2025-08-25 23:56:31', '2025-08-25 23:56:31'),
+(20, 'Desktops', 15, '2025-08-25 23:58:23', '2025-08-25 23:58:23'),
+(21, 'Laptop', 15, '2025-08-25 23:58:32', '2025-08-25 23:58:32'),
+(22, 'SmartPhones', 15, '2025-08-25 23:59:04', '2025-08-25 23:59:04'),
+(23, 'Makeup', 14, '2025-08-25 23:59:44', '2025-08-25 23:59:44'),
+(24, 'Hair Care', 14, '2025-08-25 23:59:53', '2025-08-25 23:59:53'),
+(25, 'Skin Care', 14, '2025-08-26 00:00:03', '2025-08-26 00:00:03'),
+(26, 'Furniture', 16, '2025-08-26 00:00:26', '2025-08-26 00:00:26'),
+(27, 'Wall Mart', 16, '2025-08-26 00:00:34', '2025-08-26 00:00:34'),
+(28, 'Home Decor', 16, '2025-08-26 00:00:52', '2025-08-26 00:00:52');
 
 -- --------------------------------------------------------
 
@@ -676,7 +705,7 @@ ALTER TABLE `carts`
 -- AUTO_INCREMENT for table `categories`
 --
 ALTER TABLE `categories`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `coupons`
@@ -736,7 +765,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `purchase`
@@ -784,7 +813,7 @@ ALTER TABLE `sales_return`
 -- AUTO_INCREMENT for table `sub_category`
 --
 ALTER TABLE `sub_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `total_purchase`
