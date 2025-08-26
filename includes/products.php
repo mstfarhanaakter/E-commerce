@@ -211,7 +211,7 @@
             margin-top: 12px;
         }
 
-        .btn {
+        .p_btn {
             flex: 1;
             display: flex;
             align-items: center;
@@ -228,8 +228,11 @@
             transition: 0.2s;
         }
 
-        .btn:hover {
-            filter: brightness(1.1);
+        .p_btn:hover {
+            /* filter: brightness(1.1); */
+            background:#FFE838;
+            color:black;
+            text-decoration:none;
         }
 
         .carousel-btn {
@@ -317,10 +320,10 @@
                                     <span class="count">(<?= rand(50, 500) ?>)</span>
                                 </div>
                                 <div class="actions">
-                                    <a href="cart.php?add=<?= $product['id'] ?>" class="btn">
+                                    <a href="cart.php?add=<?= $product['id'] ?>" class="p_btn">
                                         <i class="fa-solid fa-cart-plus"></i> Add to Cart
                                     </a>
-                                    <a href="shop_detail.php?id=<?= $product['id'] ?>" class="btn">
+                                    <a href="shop_detail.php?id=<?= $product['id'] ?>" class="p_btn">
                                         <i class="fa-solid fa-eye"></i> Preview
                                     </a>
                                 </div>

@@ -35,6 +35,11 @@
     <!-- new -->
     <link rel="stylesheet" href=".../style.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .btn:hover{
+            color:white;
+        }
+    </style>
 
 
 </head>
