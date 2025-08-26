@@ -1,3 +1,12 @@
+<?php
+// require "../config/db.php"; 
+// database connection include
+
+// fetch all products
+$query = "SELECT * FROM products ORDER BY id DESC";
+$result = mysqli_query($con, $query);
+?>
+
 <div>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
@@ -230,15 +239,6 @@
             filter: brightness(1.1);
         }
     </style>
-
-    <?php
-    // require "../config/db.php"; 
-    // database connection include
-    
-    // fetch all products
-    $query = "SELECT * FROM products ORDER BY id DESC";
-    $result = mysqli_query($con, $query);
-    ?>
 
     <div class="product-grid-wrapper" data-theme="indigo">
         <div class="container">

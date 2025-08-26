@@ -18,12 +18,14 @@ if (isset($_POST['submit'])) {
     $user_id = $_SESSION['user_id'] ?? 1;
     $name = trim($_POST['name']);
     $price = trim($_POST['price']);
+    $old_price = trim($_POST['old_price']);
     $description = trim($_POST['description']);
     $category_id = $_POST['category'];
     $sub_category_id = $_POST['sub_category'];
 
     // Handle image
     $upload_dir = 'products/';
+    // ../ মানে admin এর বাইরেই যাওয়া, অর্থাৎ আপনার সাইটের রুট ফোল্ডার।
     $image_name = $_FILES['image']['name'];
     $image_tmp = $_FILES['image']['tmp_name'];
     $image_size = $_FILES['image']['size'];
@@ -36,8 +38,8 @@ if (isset($_POST['submit'])) {
 
         if (move_uploaded_file($image_tmp, $image_path)) {
             // Insert product using prepared statement
-            $stmt = mysqli_prepare($con, "INSERT INTO products (user_id, name, images, price, description, category_id, sub_category_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            mysqli_stmt_bind_param($stmt, "issdsii", $user_id, $name, $image_path, $price, $description, $category_id, $sub_category_id);
+            $stmt = mysqli_prepare($con, "INSERT INTO products (user_id, name, images, price, old_price, description, category_id, sub_category_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            mysqli_stmt_bind_param($stmt, "issddsii", $user_id, $name, $image_path, $price, $old_price, $description, $category_id, $sub_category_id);
 
             if (mysqli_stmt_execute($stmt)) {
                 $statusMessage = "<div class='alert alert-success'>Product added successfully!</div>";
@@ -61,11 +63,13 @@ $sub_categories_result = mysqli_query($con, "SELECT * FROM sub_category");
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Add Product</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
     <main class="p-4">
         <div class="container mt-5">
@@ -79,13 +83,18 @@ $sub_categories_result = mysqli_query($con, "SELECT * FROM sub_category");
                 </div>
 
                 <div class="mb-3">
-                    <label for="image" class="form-label">Product Image</label>
+                    <label for="image" class="form-label">Product Images</label>
                     <input type="file" class="form-control" name="image" id="image" required>
                 </div>
 
                 <div class="mb-3">
                     <label for="price" class="form-label">Price</label>
                     <input type="number" step="0.01" class="form-control" name="price" id="price" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="old_price" class="form-label">Old Price</label>
+                    <input type="number" step="0.01" class="form-control" name="old_price" id="old_price" required>
                 </div>
 
                 <div class="mb-3">
@@ -108,7 +117,8 @@ $sub_categories_result = mysqli_query($con, "SELECT * FROM sub_category");
                     <select class="form-control" name="sub_category" id="sub_category" required>
                         <option value="" disabled selected>Select Sub-Category</option>
                         <?php while ($sub_category = mysqli_fetch_assoc($sub_categories_result)): ?>
-                            <option value="<?= $sub_category['id'] ?>"><?= htmlspecialchars($sub_category['name']) ?></option>
+                            <option value="<?= $sub_category['id'] ?>"><?= htmlspecialchars($sub_category['name']) ?>
+                            </option>
                         <?php endwhile; ?>
                     </select>
                 </div>
@@ -120,6 +130,7 @@ $sub_categories_result = mysqli_query($con, "SELECT * FROM sub_category");
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>
 
 <?php require "inc/footer.php"; ?>

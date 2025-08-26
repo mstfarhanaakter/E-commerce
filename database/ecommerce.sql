@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 25, 2025 at 10:31 PM
+-- Generation Time: Aug 26, 2025 at 07:25 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -219,6 +219,7 @@ CREATE TABLE `products` (
   `name` varchar(255) DEFAULT NULL,
   `images` text DEFAULT NULL,
   `price` decimal(15,2) DEFAULT NULL,
+  `old_price` double(15,2) DEFAULT NULL,
   `description` text DEFAULT NULL,
   `category_id` int(11) DEFAULT NULL,
   `sub_category_id` int(11) DEFAULT NULL,
@@ -230,11 +231,11 @@ CREATE TABLE `products` (
 -- Dumping data for table `products`
 --
 
-INSERT INTO `products` (`id`, `user_id`, `name`, `images`, `price`, `description`, `category_id`, `sub_category_id`, `created_at`, `updated_at`) VALUES
-(5, 1, 'Shirt', 'products/img_68acbbf98b9d04.76682807.jpg', 455.00, 'This is a cotton shirt', 11, 10, '2025-08-26 01:39:37', '2025-08-26 01:39:37'),
-(6, 1, 'MakeUp', 'products/img_68acbdf316e0a3.67901766.jpg', 345.00, 'This is makeup', 14, 23, '2025-08-26 01:48:03', '2025-08-26 01:48:03'),
-(9, 1, 'Kids Cloth', 'products/img_68acbfc69025c3.87599044.jpg', 123.00, 'This is a conform dress', 13, 19, '2025-08-26 01:55:50', '2025-08-26 01:55:50'),
-(11, 1, 'Kids Cloth', 'products/img_68acc4b6619a87.02615445.jpg', 123.00, 'This is a conform dress', 13, 19, '2025-08-26 02:16:54', '2025-08-26 02:16:54');
+INSERT INTO `products` (`id`, `user_id`, `name`, `images`, `price`, `old_price`, `description`, `category_id`, `sub_category_id`, `created_at`, `updated_at`) VALUES
+(12, 1, 'Desktop', 'products/desktop.jpg', 98000.00, 110000.00, 'This desktop can be used for heavy work load.', 15, 20, '2025-08-26 10:23:55', '2025-08-26 10:23:55'),
+(13, 1, 'MakeUp', 'products/img_68ad3da735b8f1.81611727.png', 2000.00, 2200.00, 'This is best makup product.', 14, 23, '2025-08-26 10:52:55', '2025-08-26 10:52:55'),
+(15, 1, 'Laptop', 'products/img_68ad419985e678.92102783.png', 56000.00, 58000.00, 'This is laptop', 15, 21, '2025-08-26 11:09:45', '2025-08-26 11:09:45'),
+(16, 1, 'Smartphone', 'products/img_68ad44bc5b0964.98343124.png', 40000.00, 45000.00, 'This is the best smartphone in century.', 15, 22, '2025-08-26 11:23:08', '2025-08-26 11:23:08');
 
 -- --------------------------------------------------------
 
@@ -765,7 +766,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `purchase`
