@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 26, 2025 at 07:25 AM
+-- Generation Time: Aug 26, 2025 at 09:05 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -235,7 +235,8 @@ INSERT INTO `products` (`id`, `user_id`, `name`, `images`, `price`, `old_price`,
 (12, 1, 'Desktop', 'products/desktop.jpg', 98000.00, 110000.00, 'This desktop can be used for heavy work load.', 15, 20, '2025-08-26 10:23:55', '2025-08-26 10:23:55'),
 (13, 1, 'MakeUp', 'products/img_68ad3da735b8f1.81611727.png', 2000.00, 2200.00, 'This is best makup product.', 14, 23, '2025-08-26 10:52:55', '2025-08-26 10:52:55'),
 (15, 1, 'Laptop', 'products/img_68ad419985e678.92102783.png', 56000.00, 58000.00, 'This is laptop', 15, 21, '2025-08-26 11:09:45', '2025-08-26 11:09:45'),
-(16, 1, 'Smartphone', 'products/img_68ad44bc5b0964.98343124.png', 40000.00, 45000.00, 'This is the best smartphone in century.', 15, 22, '2025-08-26 11:23:08', '2025-08-26 11:23:08');
+(16, 1, 'Smartphone', 'products/img_68ad44bc5b0964.98343124.png', 40000.00, 45000.00, 'This is the best smartphone in century.', 15, 22, '2025-08-26 11:23:08', '2025-08-26 11:23:08'),
+(20, 1, 'Boys Watch', 'products/img_68ad591fa62da6.53397525.png', 1200.00, 1500.00, 'Boys Stylist watch', 11, 12, '2025-08-26 12:50:07', '2025-08-26 12:50:07');
 
 -- --------------------------------------------------------
 
@@ -766,7 +767,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `purchase`
