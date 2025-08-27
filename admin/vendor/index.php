@@ -1,6 +1,6 @@
 <?php
 session_start();
-require "config/db.php"; // ডেটাবেস কানেকশন
+require "../config/db.php"; // ডেটাবেস কানেকশন
 
 $msg = "";
 
@@ -31,7 +31,7 @@ if (isset($_POST['login'])) {
             $_SESSION['email'] = $email;
 
             // Vendor ড্যাশবোর্ডে পাঠান
-            header("Location: vendor_dashboard.php");
+            header("../Location: vendor_index.php");
             exit;
         }
     } else {
