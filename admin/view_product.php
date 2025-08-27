@@ -108,7 +108,7 @@ if (!$result) {
                                                 <div class="modal-footer justify-content-center">
                                                     <button type="button" class="btn btn-secondary px-4"
                                                         data-bs-dismiss="modal">Cancel</button>
-                                                    <a href="delete_product.php?id=<?= $product['id']; ?>"
+                                                    <a href="delete_product.php?del_id=<?= $product['id']; ?>"
                                                         class="btn btn-danger px-4">Yes, Delete</a>
                                                 </div>
                                             </div>

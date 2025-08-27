@@ -1,53 +1,63 @@
 <?php
 session_start();
-require "config/db.php"; // Database connection
+require "config/db.php"; // ডেটাবেস কানেকশন
 
 $msg = "";
 
-// Handle form submission
 if (isset($_POST['submit'])) {
-    $first_name = mysqli_real_escape_string($con, $_POST['f_name']);
-    $last_name  = mysqli_real_escape_string($con, $_POST['l_name']);
-    $email      = mysqli_real_escape_string($con, $_POST['email']);
+    // ইনপুট নিন ও ট্রিম করুন
+    $first_name = trim($_POST['f_name']);
+    $last_name  = trim($_POST['l_name']);
+    $email      = trim($_POST['email']);
     $password   = $_POST['pass'];
     $repass     = $_POST['repass'];
-    $role_id    = $_POST['role'];  // Getting selected role
 
-    // 1. Check if passwords match
+    // Customer role_id ডিফল্ট ২
+    $role_id = 2;
+
+    // পাসওয়ার্ড মিলানো
     if ($password !== $repass) {
         $msg = "Passwords do not match!";
     } else {
-        // 2. Check if email already exists
-        $check = "SELECT id FROM users WHERE email='$email'";
-        $result = mysqli_query($con, $check);
+        // ইমেইল আগে আছে কিনা চেক
+        $check_sql = "SELECT id FROM users WHERE email = ?";
+        $stmt = $con->prepare($check_sql);
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
 
-        if (mysqli_num_rows($result) > 0) {
+        if ($stmt->num_rows > 0) {
             $msg = "Email already registered!";
+            $stmt->close();
         } else {
-            // 3. Hash password
+            $stmt->close();
+
+            // পাসওয়ার্ড হ্যাশ করুন
             $hashPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            // 4. Insert new user with selected role
-            $query = "INSERT INTO users (first_name, last_name, email, password, role_id) 
-                      VALUES ('$first_name', '$last_name', '$email', '$hashPassword', '$role_id')";
+            // ডেটাবেসে ইনসার্ট করুন
+            $insert_sql = "INSERT INTO users (first_name, last_name, email, password, role_id) VALUES (?, ?, ?, ?, ?)";
+            $stmt = $con->prepare($insert_sql);
+            $stmt->bind_param("ssssi", $first_name, $last_name, $email, $hashPassword, $role_id);
 
-            if (mysqli_query($con, $query)) {
-                // Set session variables
-                $user_id = mysqli_insert_id($con);
-                $_SESSION['user_id'] = $user_id;
+            if ($stmt->execute()) {
+                // সেশন সেট করুন
+                $_SESSION['user_id'] = $con->insert_id;
                 $_SESSION['first_name'] = $first_name;
                 $_SESSION['email'] = $email;
 
-                // Redirect to homepage after signup
+                // হোমপেজ বা যেকোনো পেজে রিডাইরেক্ট করুন
                 header("Location: indexfile.php");
                 exit;
             } else {
-                $msg = "Database error: " . mysqli_error($con);
+                $msg = "Database error: " . $stmt->error;
             }
+            $stmt->close();
         }
     }
 }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -96,21 +106,6 @@ if (isset($_POST['submit'])) {
         <div class="mb-3 position-relative">
             <input type="password" class="form-control" name="repass" id="repass" placeholder="Confirm Password" required>
             <i class="fa-solid fa-eye position-absolute top-50 end-0 translate-middle-y me-3" id="toggleRepass"></i>
-        </div>
-
-        <!-- Role Selection -->
-        <div class="mb-3">
-            <select class="form-control" name="role" required>
-                <option value="" disabled selected>Select Role</option>
-                <?php
-                // Fetch roles from the 'role' table
-                $roleQuery = "SELECT id, name FROM role";
-                $roleResult = mysqli_query($con, $roleQuery);
-                while ($role = mysqli_fetch_assoc($roleResult)) {
-                    echo "<option value='" . $role['id'] . "'>" . ucfirst($role['name']) . "</option>";
-                }
-                ?>
-            </select>
         </div>
 
         <p class="text-center small">

@@ -117,7 +117,7 @@ foreach ($subcategories as $subcat) {
                         </a>
 
                         <!-- Account Dropdown -->
-                        <div class="navbar-nav me-auto py-0">
+                        <div class="navbar-nav me-auto py-0 d-none">
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false">

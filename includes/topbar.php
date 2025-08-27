@@ -26,10 +26,10 @@
                  <a href="vendor_index.php" class="btn btn-sm btn-warning mr-2">
                     <i class="fas fa-store mr-1"></i> <b>Become A Seller</b>
                 </a>
-                <a href="login.php" class="btn btn-sm btn-warning mr-2">
+                <a href="customer_login.php" class="btn btn-sm btn-warning mr-2">
                     <i class="fas fa-sign-in-alt mr-1"></i> <b>Sign In</b>
                 </a>
-                <a href="registration.php" class="btn btn-sm btn-warning">
+                <a href="customer_registration.php" class="btn btn-sm btn-warning">
                     <i class="fas fa-user-plus mr-1"></i> <b>Sign Up</b>
                 </a>
                 

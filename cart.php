@@ -16,7 +16,11 @@ require "includes/navbar.php";
 
 <!-- php Heaader, topbar, navbar, banner, feature, category, products end -->
 
-
+ <?php
+    // require "../config/db.php";
+    $query = "SELECT * FROM products ORDER BY id DESC";
+    $result = mysqli_query($con, $query);
+    ?>
 
 <!-- Cart Start -->
     <div class="container-fluid">
@@ -32,9 +36,11 @@ require "includes/navbar.php";
                             <th>Remove</th>
                         </tr>
                     </thead>
-                    <tbody class="align-middle">
+                    < class="align-middle">
+                        <?php while ($product = mysqli_fetch_assos($result)): ?>
                         <tr>
-                            <td class="align-middle"><img src="img/product-1.jpg" alt="" style="width: 50px;"> Product Name</td>
+                            <td class="align-middle">
+                                <img src="./admin/<?= htmlspecialchars($product['images']) ?>" alt="<?=htmlspecialchars($product['name']) ?>" style="width: 50px;">Hey</td>
                             <td class="align-middle">$150</td>
                             <td class="align-middle">
                                 <div class="input-group quantity mx-auto" style="width: 100px;">
@@ -138,6 +144,7 @@ require "includes/navbar.php";
                             <td class="align-middle">$150</td>
                             <td class="align-middle"><button class="btn btn-sm btn-danger"><i class="fa fa-times"></i></button></td>
                         </tr>
+                        <?php endwhile; ?>
                     </tbody>
                 </table>
             </div>

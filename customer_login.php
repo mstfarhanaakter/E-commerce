@@ -1,39 +1,45 @@
 <?php
 session_start();
-require "config/db.php"; // Database connection
+require "config/db.php";
 
 $msg = "";
 
-// Login handling
-if (isset($_POST["submit"])) {
-    $email    = mysqli_real_escape_string($con, $_POST["email"]);
-    $password = $_POST["pass"];
+if (isset($_POST['submit'])) {
+    $email = trim($_POST['email']);
+    $password = $_POST['pass'];
 
-    // Step 1: Check user by email
-    $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
-    $result = mysqli_query($con, $sql);
+    // ইউজার ডেটা নিন, শুধু Customer role_id=2 এর জন্য
+    $sql = "SELECT id, first_name, password FROM users WHERE email = ? AND role_id = 2";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-    if (mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
-        $stored_password = $row["password"]; // Hashed password
+    if ($stmt->num_rows == 1) {
+        $stmt->bind_result($user_id, $first_name, $hashed_password);
+        $stmt->fetch();
 
-        // Step 2: Verify password
-        if (password_verify($password, $stored_password)) {
-            // Step 3: Create session
-            $_SESSION["user_id"]    = $row["id"];
-            $_SESSION["first_name"] = $row["first_name"];
-            $_SESSION["email"]      = $row["email"];
+        // পাসওয়ার্ড মিলান
+        if (password_verify($password, $hashed_password)) {
+            // লগইন সফল
+            $_SESSION['user_id'] = $user_id;
+            $_SESSION['first_name'] = $first_name;
+            $_SESSION['email'] = $email;
 
+            // রিডাইরেক্ট করুন হোমপেজ বা ড্যাশবোর্ডে
             header("Location: indexfile.php");
             exit;
         } else {
-            $msg = "Invalid email or password!";
+            $msg = "Invalid password!";
         }
     } else {
-        $msg = "Invalid email or password!";
+        $msg = "User not found or not a customer!";
     }
+
+    $stmt->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
