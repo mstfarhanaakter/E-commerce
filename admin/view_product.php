@@ -31,7 +31,7 @@ if (!$result) {
 
 <main class="p-4">
     <div class="container mt-5">
-        <h2 class="mb-4 text-center bg-warning p-1 rounded">View Products</h2>
+        <h2 class="mb-4 text-center bg-warning p-1 rounded">Manage Products</h2>
 
         <div class="table-responsive">
             <table class="table table-striped table-hover table-bordered shadow-sm rounded">
@@ -71,7 +71,12 @@ if (!$result) {
                                 <td><?= htmlspecialchars($product['sub_category_name'] ?? 'N/A'); ?></td>
                                 <td>
                                     <div class="d-flex flex-wrap justify-content-center gap-2">
-
+                                        <!-- View Button -->
+                                        <a href="view_product.php?id=<?= $product['id']; ?>"
+                                            class="btn btn-outline-success btn-sm d-flex align-items-center"
+                                            data-bs-toggle="tooltip" data-bs-placement="top" title="View Product">
+                                            <i class="bi bi-eye me-1"></i> View
+                                        </a>
                                         <!-- Edit Button -->
                                         <a href="edit_product.php?id=<?= $product['id']; ?>"
                                             class="btn btn-outline-primary btn-sm d-flex align-items-center"

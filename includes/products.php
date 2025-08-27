@@ -230,9 +230,9 @@
 
         .p_btn:hover {
             /* filter: brightness(1.1); */
-            background:#FFE838;
-            color:black;
-            text-decoration:none;
+            background: #FFE838;
+            color: black;
+            text-decoration: none;
         }
 
         .carousel-btn {

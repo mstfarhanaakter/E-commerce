@@ -100,7 +100,7 @@
     <div class="collapse" id="productsCollapse">
       <nav class="nav flex-column ms-4 mt-2">
         <a href="add_product.php" class="nav-link d-flex align-items-center"><i class="fa fa-plus me-2"></i> Insert Product</a>
-        <a href="view_product.php" class="nav-link d-flex align-items-center"><i class="fa fa-eye me-2"></i> View Products</a>
+        <a href="view_product.php" class="nav-link d-flex align-items-center"><i class="fa fa-eye me-2"></i> Manage Products</a>
         <a href="#" class="nav-link d-flex align-items-center"><i class="fa fa-cubes me-2"></i> Manage Inventory</a>
       </nav>
     </div>
