@@ -115,9 +115,8 @@ foreach ($subcategories as $subcat) {
                             <span
                                 class="badge bg-light text-dark position-absolute top-0 start-100 translate-middle rounded-pill border border-secondary">0</span>
                         </a>
-
                         <!-- Account Dropdown -->
-                        <div class="navbar-nav me-auto py-0 d-none">
+                        <div class="navbar-nav me-auto py-0">
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                                     aria-expanded="false">
@@ -125,19 +124,19 @@ foreach ($subcategories as $subcat) {
                                     <i class="fa fa-angle-down mt-1"></i>
                                 </a>
                                 <ul class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                    <li><a href="cart.html" class="dropdown-item">
+                                    <li><a href="#" class="dropdown-item">
                                             <i class="fas fa-id-card me-2"></i>Edit Profile</a>
                                     </li>
-                                    <li><a href="cart.html" class="dropdown-item">
+                                    <li><a href="#" class="dropdown-item">
                                             <i class="fas fa-box me-2"></i>My Orders</a>
                                     </li>
-                                    <li><a href="cart.html" class="dropdown-item">
+                                    <li><a href="#" class="dropdown-item">
                                             <i class="fas fa-heart me-2"></i>My Wishlist</a>
                                     </li>
-                                    <li><a href="cart.html" class="dropdown-item">
+                                    <li><a href="#" class="dropdown-item">
                                             <i class="fas fa-times me-2"></i>My Returns & <br> Cancellations</a>
                                     </li>
-                                    <li><a href="../logout.php" class="dropdown-item">
+                                    <li><a href="hello.php" class="dropdown-item">
                                             <i class="fas fa-sign-out-alt me-2"></i>Logout</a>
                                     </li>
                                 </ul>

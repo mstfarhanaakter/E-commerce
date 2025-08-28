@@ -1,8 +1,13 @@
 <?php
 session_start();
-session_unset();
-session_destroy();
 
-header("Location: login.php");
-exit;
+if (!isset($_SESSION['user_id'])) {
+
+
+    // Destroy all session data
+    session_destroy(); // Destroy the session
+    header("Location: hello.php");
+    exit;
+}
+
 ?>

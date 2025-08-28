@@ -27,7 +27,7 @@ if (isset($_POST['submit'])) {
             $_SESSION['email'] = $email;
 
             // রিডাইরেক্ট করুন হোমপেজ বা ড্যাশবোর্ডে
-            header("Location: indexfile.php");
+            header("Location: main.php");
             exit;
         } else {
             $msg = "Invalid password!";
