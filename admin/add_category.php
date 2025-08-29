@@ -6,7 +6,7 @@ require "inc/mobile_sidebar.php";
 
 // Database connection
 require "../config/db.php";
-
+//
 // Initialize a variable for status message
 $statusMessage = '';
 
