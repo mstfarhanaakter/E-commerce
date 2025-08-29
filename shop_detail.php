@@ -15,7 +15,11 @@ require "includes/navbar.php";
 ?>
 
 <!-- php Heaader, topbar, navbar, banner, feature, category, products end -->
-
+ <?php
+    // require "../config/db.php";
+    $query = "SELECT * FROM products ORDER BY id DESC";
+    $result = mysqli_query($con, $query);
+    ?>
 
 
 <!-- Shop Detail Start -->
@@ -24,10 +28,11 @@ require "includes/navbar.php";
         <div class="col-lg-5 mb-30">
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
                 <div class="carousel-inner bg-light">
+                    <?php while ($product = mysqli_fetch_assoc($result)): ?>
                     <div class="carousel-item active">
-                        <img class="w-100 h-100" src="img/product-1.jpg" alt="Image">
+                        <img class="w-100 h-100" src="./admin/<?=htmlspecialchars($product['images']);?>" alt="Image">
                     </div>
-                    <div class="carousel-item">
+                    <!-- <div class="carousel-item">
                         <img class="w-100 h-100" src="img/product-2.jpg" alt="Image">
                     </div>
                     <div class="carousel-item">
@@ -35,7 +40,8 @@ require "includes/navbar.php";
                     </div>
                     <div class="carousel-item">
                         <img class="w-100 h-100" src="img/product-4.jpg" alt="Image">
-                    </div>
+                    </div> -->
+                    <?php endwhile; ?>
                 </div>
                 <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                     <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -48,7 +54,7 @@ require "includes/navbar.php";
 
         <div class="col-lg-7 h-auto mb-30">
             <div class="h-100 bg-light p-30">
-                <h3>Product Name Goes Here</h3>
+                <h3><?=htmlspecialchars($product['name']) ;?></h3>
                 <div class="d-flex mb-3">
                     <div class="text-primary mr-2">
                         <small class="fas fa-star"></small>

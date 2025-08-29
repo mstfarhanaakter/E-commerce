@@ -1,39 +1,47 @@
 <?php
 session_start();
-require "../config/db.php"; // Database connection
+require "../config/db.php"; // ডেটাবেস কানেকশন
 
 $msg = "";
 
-// Login handling
-if (isset($_POST["submit"])) {
-    $email = mysqli_real_escape_string($con, $_POST["email"]);
-    $password = $_POST["pass"];
+if (isset($_POST['login'])) {
+    $email = trim($_POST['email']);
+    $password = $_POST['password'];
 
-    // Step 1: Check user by email
-    $sql = "SELECT * FROM users WHERE email = '$email' LIMIT 1";
-    $result = mysqli_query($con, $sql);
+    // Vendor role_id = 3 এবং অনুমোদিত (is_approved = 1) এমন ইউজার খুঁজুন
+    $sql = "SELECT id, first_name, password, is_approved FROM users WHERE email = ? AND role_id = 3";
+    $stmt = $con->prepare($sql);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
 
-    if (mysqli_num_rows($result) === 1) {
-        $row = mysqli_fetch_assoc($result);
-        $stored_password = $row["password"]; // Hashed password
+    // যদি ইউজার থাকে
+    if ($stmt->num_rows == 1) {
+        $stmt->bind_result($user_id, $first_name, $hashed_password, $is_approved);
+        $stmt->fetch();
 
-        // Step 2: Verify password
-        if (password_verify($password, $stored_password)) {
-            // Step 3: Create session
-            $_SESSION["user_id"] = $row["id"];
-            $_SESSION["first_name"] = $row["first_name"];
-            $_SESSION["email"] = $row["email"];
-
-            header("Location: indexfile.php");
-            exit;
+        if (!password_verify($password, $hashed_password)) {
+            $msg = "Invalid password!";
+        } elseif ($is_approved == 0) {
+            $msg = "Your account is pending approval.";
         } else {
-            $msg = "Invalid email or password!";
+            // সব ঠিক থাকলে লগইন করুন
+            $_SESSION['user_id'] = $user_id;
+            $_SESSION['first_name'] = $first_name;
+            $_SESSION['email'] = $email;
+
+            // Vendor ড্যাশবোর্ডে পাঠান
+            header("../Location: vendor_index.php");
+            exit;
         }
     } else {
-        $msg = "Invalid email or password!";
+        $msg = "Vendor not found!";
     }
+
+    $stmt->close();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 

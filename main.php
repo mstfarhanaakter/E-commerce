@@ -1,11 +1,12 @@
 <!-- php Heaader, topbar, navbar, banner, feature, category, products start -->
 <?php
+session_start();
+
 require "config/db.php";
 require "includes/he.php";
 
-// যদি ইউজার লগইন করে থাকে, তাহলে logged-in navbar দেখাও
-require "includes/topbar.php";
-require "includes/navbar.php";
+require "includes/topbar_logged.php";
+require "includes/navbar_logged.php";
 
 require "includes/banner.php";
 require "includes/feature.php";

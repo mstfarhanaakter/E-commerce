@@ -1,8 +1,10 @@
 <div>
+    <!-- Fonts and Icons -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
         crossorigin="anonymous" />
 
+    <!-- Styles -->
     <style>
         .product-grid-wrapper {
             --bg: #ffffff;
@@ -12,22 +14,19 @@
             --muted: #6b7280;
             --primary: #FFD333;
             --primary-600: #d97706;
-            --primary-700: #b45309;
             --accent: #fb7185;
-            --success: #22c55e;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --ring: rgba(255, 255, 255, 0.4);
             --shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
             --radius: 18px;
             background: radial-gradient(1200px 600px at 10% -10%, rgba(255, 255, 255, 0.06), transparent),
                 radial-gradient(800px 400px at 90% 10%, rgba(255, 255, 255, 0.05), transparent),
                 var(--bg);
             color: var(--text);
-            font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+            font-family: "Inter", sans-serif;
         }
 
-        .product-grid-wrapper * {
+        .product-grid-wrapper *,
+        .product-grid-wrapper *::before,
+        .product-grid-wrapper *::after {
             box-sizing: border-box;
         }
 
@@ -35,13 +34,13 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 32px 20px 60px;
+            position: relative;
         }
 
         .product-grid-wrapper header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 16px;
             margin-bottom: 28px;
         }
 
@@ -64,80 +63,63 @@
         .product-grid-wrapper .brand h1 {
             font-size: 20px;
             margin: 0;
-            letter-spacing: 0.3px;
         }
 
-        .product-grid-wrapper .themes {
+        .carousel {
             display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .product-grid-wrapper .theme-btn {
-            padding: 10px 14px;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            background: var(--surface);
-            color: var(--text);
-            cursor: pointer;
-        }
-
-        .product-grid-wrapper .theme-btn.active {
-            outline: 2px solid var(--ring);
-        }
-
-        .product-grid-wrapper .grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
             gap: 18px;
+            padding-bottom: 20px;
+            scrollbar-width: none;
+        }
+
+        .carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .card {
+            flex: 0 0 calc((100% / 4) - 13.5px);
+            scroll-snap-align: start;
+            background: var(--card);
         }
 
         @media (max-width: 1100px) {
-            .product-grid-wrapper .grid {
-                grid-template-columns: repeat(3, 1fr);
+            .card {
+                flex: 0 0 calc((100% / 3) - 12px);
             }
         }
 
         @media (max-width: 800px) {
-            .product-grid-wrapper .grid {
-                grid-template-columns: repeat(2, 1fr);
+            .card {
+                flex: 0 0 calc((100% / 2) - 9px);
             }
         }
 
         @media (max-width: 520px) {
-            .product-grid-wrapper .grid {
-                grid-template-columns: 1fr;
+            .card {
+                flex: 0 0 100%;
             }
         }
 
-        .product-grid-wrapper .card {
+        .media {
             position: relative;
-            overflow: hidden;
-            border-radius: var(--radius);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0));
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: var(--shadow);
-        }
-
-        .product-grid-wrapper .media {
-            position: relative;
-            aspect-ratio: 4/3;
+            aspect-ratio: 4 / 3;
             overflow: hidden;
         }
 
-        .product-grid-wrapper .media img {
+        .media img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            display: block;
             transition: transform 0.5s ease;
         }
 
-        .product-grid-wrapper .card:hover .media img {
+        .card:hover .media img {
             transform: scale(1.06);
         }
 
-        .product-grid-wrapper .badges {
+        .badges {
             position: absolute;
             top: 12px;
             left: 12px;
@@ -146,28 +128,27 @@
             z-index: 2;
         }
 
-        .product-grid-wrapper .badge {
+        .badge {
             padding: 6px 10px;
             border-radius: 999px;
             font-size: 12px;
             font-weight: 600;
             color: #0b1020;
             background: var(--accent);
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
         }
 
-        .product-grid-wrapper .badge.secondary {
-            background: var(--warning);
+        .badge.secondary {
+            background: var(--primary);
         }
 
-        .product-grid-wrapper .wishlist {
+        .wishlist {
             position: absolute;
             top: 10px;
             right: 10px;
             z-index: 2;
         }
 
-        .product-grid-wrapper .icon-btn {
+        .icon-btn {
             width: 40px;
             height: 40px;
             border-radius: 12px;
@@ -176,46 +157,42 @@
             background: rgba(165, 165, 165, 0.35);
             border: 1px solid rgba(255, 255, 255, 0.15);
             color: white;
-            backdrop-filter: blur(8px);
             cursor: pointer;
-            transition: transform 0.2s ease, background 0.2s ease;
+            transition: 0.2s;
         }
 
-        .product-grid-wrapper .icon-btn:hover {
+        .icon-btn:hover {
             transform: translateY(-2px);
-            background: rgba(214, 209, 209, 0.45);
             color: red;
         }
 
-        .product-grid-wrapper .content {
-            padding: 14px 14px 16px;
+        .content {
+            padding: 14px;
         }
 
-        .product-grid-wrapper .title {
+        .title {
             font-weight: 600;
             font-size: 16px;
             margin: 4px 0 8px;
-            letter-spacing: 0.2px;
         }
 
-        .product-grid-wrapper .price {
+        .price {
             display: flex;
-            align-items: center;
             gap: 8px;
-            margin: 6px 0 10px;
+            margin-bottom: 10px;
         }
 
-        .product-grid-wrapper .price .new {
+        .price .new {
             font-weight: 700;
         }
 
-        .product-grid-wrapper .price .old {
+        .price .old {
             color: var(--muted);
             text-decoration: line-through;
             font-size: 14px;
         }
 
-        .product-grid-wrapper .rating {
+        .rating {
             display: flex;
             align-items: center;
             gap: 6px;
@@ -223,44 +200,84 @@
             font-size: 14px;
         }
 
-        .product-grid-wrapper .rating .count {
+        .rating .count {
             color: var(--muted);
             font-size: 12px;
         }
 
-        .product-grid-wrapper .actions {
+        .actions {
             display: flex;
             gap: 10px;
             margin-top: 12px;
         }
 
-        .product-grid-wrapper .btn {
-            flex: 1 1 auto;
+        .p_btn {
+            flex: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            border: 1px solid grey;
             gap: 8px;
             padding: 10px 12px;
             font-size: 12px;
             border-radius: 12px;
-            background: #FFD333;
+            background: var(--primary);
             color: #0b1020;
             font-weight: bold;
+            text-decoration: none;
+            border: 1px solid grey;
+            transition: 0.2s;
+        }
+
+        .p_btn:hover {
+            /* filter: brightness(1.1); */
+            background: #FFE838;
+            color: black;
+            text-decoration: none;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            width: 46px;
+            height: 46px;
+            transform: translateY(-50%);
+            background: var(--primary);
+            border: none;
+            padding: 10px 14px;
+            border-radius: 50%;
+            color: #0b1020;
             cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+            z-index: 10;
         }
 
-        .product-grid-wrapper .btn:hover {
-            filter: brightness(1.1);
+        .carousel-btn:hover {
+            background: var(--primary-600);
+            color: white;
         }
 
-        .product-grid-wrapper .btn:disabled {
-            opacity: 0.65;
-            cursor: not-allowed;
+        .prev-btn {
+            left: -50px;
+        }
+
+        .next-btn {
+            right: -50px;
+        }
+
+        @media (max-width: 768px) {
+            .carousel-btn {
+                display: none;
+            }
         }
     </style>
 
-    <div class="product-grid-wrapper" data-theme="indigo">
+    <?php
+    // require "../config/db.php";
+    $query = "SELECT * FROM products ORDER BY id DESC";
+    $result = mysqli_query($con, $query);
+    ?>
+
+    <div class="product-grid-wrapper bg-light" data-theme="indigo">
         <div class="container">
             <header>
                 <div class="brand">
@@ -269,127 +286,74 @@
                 </div>
             </header>
 
-            <main class="grid py-1">
-                <!-- Cards -->
-                <div class="card">
-                    <div class="media">
-                        <img src="https://images.unsplash.com/photo-1460353581641-37baddab0fa2?q=80&w=1200&auto=format&fit=crop"
-                            alt="Chair" />
-                        <div class="badges">
-                            <div class="badge">New</div>
-                            <div class="badge secondary">-30%</div>
-                        </div>
-                        <div class="wishlist"><button class="icon-btn"><i class="fa-regular fa-heart"></i></button>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <div class="title">Awesome Product</div>
-                        <div class="price">
-                            <div class="new">$49.99</div>
-                            <div class="old">$79.99</div>
-                        </div>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
-                                class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star-half-stroke"></i><i class="fa-regular fa-star"></i>
-                            <span class="count">(237)</span>
-                        </div>
-                        <div class="actions">
-                            <button class="btn"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
-                            <button class="btn"><i class="fa-solid fa-eye"></i> Preview</button>
-                        </div>
-                    </div>
-                </div>
+            <button class="carousel-btn prev-btn" aria-label="Previous">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
 
-                <!-- You can add more cards here (as in your original code) -->
-                <!-- Card 2 -->
-                <div class="card">
-                    <div class="media">
-                        <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?q=80&w=1200&auto=format&fit=crop"
-                            alt="Camera" />
-                        <div class="badges">
-                            <div class="badge secondary">Stock Out</div>
+            <div class="carousel-wrapper">
+                <main class="carousel py-0">
+                    <?php while ($product = mysqli_fetch_assoc($result)): ?>
+                        <div class="card">
+                            <div class="media">
+                                <img src="./admin/<?= htmlspecialchars($product['images']) ?>"
+                                    alt="<?= htmlspecialchars($product['name']) ?>">
+                                <div class="badges">
+                                    <div class="badge">New</div>
+                                    <div class="badge secondary">-30%</div>
+                                </div>
+                                <div class="wishlist1">
+                                    <button class="icon-btn"><i class="fa-regular fa-heart wishlist"></i></button>
+                                </div>
+                            </div>
+                            <div class="content">
+                                <div class="title"><?= htmlspecialchars($product['name']) ?></div>
+                                <div class="price">
+                                    <div class="new">$<?= number_format($product['price'], 2) ?></div>
+                                    <div class="old">$<?= number_format($product['old_price'], 2) ?></div>
+                                </div>
+                                <div class="rating">
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star"></i>
+                                    <i class="fa-solid fa-star-half-stroke"></i>
+                                    <i class="fa-regular fa-star"></i>
+                                    <span class="count">(<?= rand(50, 500) ?>)</span>
+                                </div>
+                                <div class="actions">
+                                    <a href="cart.php?add=<?= $product['id'] ?>" class="p_btn">
+                                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                                    </a>
+                                    <a href="shop_detail.php?id=<?= $product['id'] ?>" class="p_btn">
+                                        <i class="fa-solid fa-eye"></i> Preview
+                                    </a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="wishlist"><button class="icon-btn"><i class="fa-regular fa-heart"></i></button>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <div class="title">Another Product</div>
-                        <div class="price">
-                            <div class="new">$89.99</div>
-                        </div>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i><i class="fa-regular fa-star"></i>
-                            <i class="fa-regular fa-star"></i>
-                            <span class="count">(105)</span>
-                        </div>
-                        <div class="actions">
-                            <button class="btn" disabled><i class="fa-solid fa-ban"></i> Unavailable</button>
-                            <button class="btn"><i class="fa-solid fa-eye"></i><a href="./shop_detail.php" class="text-decoration-none text-black">Preview</a> </button>
-                        </div>
-                    </div>
-                </div>
+                    <?php endwhile; ?>
+                </main>
+            </div>
 
-                <!-- Card 3 -->
-                <div class="card">
-                    <div class="media">
-                        <img src="https://images.unsplash.com/photo-1511385348-a52b4a160dc2?q=80&w=1200&auto=format&fit=crop"
-                            alt="Smartwatch" />
-                        <div class="badges">
-                            <div class="badge">Bestseller</div>
-                        </div>
-                        <div class="wishlist"><button class="icon-btn"><i class="fa-regular fa-heart"></i></button>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <div class="title">Cool Product</div>
-                        <div class="price">
-                            <div class="new">$39.99</div>
-                            <div class="old">$59.99</div>
-                        </div>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i>
-                            <span class="count">(542)</span>
-                        </div>
-                        <div class="actions">
-                            <button class="btn"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
-                            <button class="btn"><i class="fa-solid fa-eye"></i> Preview</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 -->
-                <div class="card">
-                    <div class="media">
-                        <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=1200&auto=format&fit=crop"
-                            alt="Backpack" />
-                        <div class="badges">
-                            <div class="badge secondary">Sale</div>
-                        </div>
-                        <div class="wishlist"><button class="icon-btn"><i class="fa-regular fa-heart"></i></button>
-                        </div>
-                    </div>
-                    <div class="content">
-                        <div class="title">Last Product</div>
-                        <div class="price">
-                            <div class="new">$99.99</div>
-                            <div class="old">$129.99</div>
-                        </div>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
-                            <i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
-                            <i class="fa-regular fa-star"></i>
-                            <span class="count">(69)</span>
-                        </div>
-                        <div class="actions">
-                            <button class="btn"><i class="fa-solid fa-cart-plus"></i> Add to Cart</button>
-                            <button class="btn"><i class="fa-solid fa-eye"></i> Preview</button>
-                        </div>
-                    </div>
-            </main>
+            <button class="carousel-btn next-btn" aria-label="Next">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
         </div>
     </div>
+
+    <!-- JavaScript -->
+    <script>
+        const carousel = document.querySelector('.product-grid-wrapper .carousel');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
+
+        function scrollByCard(direction) {
+            const card = carousel.querySelector('.card');
+            if (!card) return;
+            const gap = parseInt(getComputedStyle(carousel).gap || 18);
+            const scrollAmt = card.getBoundingClientRect().width + gap;
+            carousel.scrollBy({ left: direction * scrollAmt, behavior: 'smooth' });
+        }
+
+        prevBtn.addEventListener('click', () => scrollByCard(-1));
+        nextBtn.addEventListener('click', () => scrollByCard(1));
+    </script>
 </div>

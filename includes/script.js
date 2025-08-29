@@ -19,3 +19,15 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     });
 });
+
+
+// let count = 0;
+// let wishlist = document.querySelectorAll(".wishlist");
+// let wishlistCount = document.querySelector(".wishlistCount");
+//     wishlist.forEach(function(btn) {
+//         btn.addEventListener('click', ()=>{
+//             count++;
+//             wishlistCount.textContent = count;
+//             alert("wishlist was clicked")
+//         })
+//     })

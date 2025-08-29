@@ -2,7 +2,7 @@
 require "../config/db.php";
 
 // Get product ID from URL
-$product_id = $_GET['id'];
+$product_id = $_GET['del_id'];
 
 // Delete product from the database
 $delete_query = "DELETE FROM products WHERE id = $product_id";
