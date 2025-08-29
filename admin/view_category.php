@@ -25,7 +25,7 @@ if (!$result) {
       <table class="table table-striped table-hover table-bordered shadow-sm rounded">
         <thead class="thead-dark">
           <tr class="text-center">
-            <th>No</th>
+            <th>#</th>
             <th>Category Name</th>
             <th>Status</th> <!-- New Status Column -->
             <th>Actions</th>

@@ -20,69 +20,74 @@ if (!$result) {
 }
 ?>
 
-<main class="p-4">
+<main class="p-3 mt-0">
     <div class="container mt-5">
-        <h2 class="mb-4 text-center">View Sub-Categories</h2>
+        <div class="card-header bg-warning text-black text-center">
+        <h3 class="mb-3 p-2">View Categories</h3>
+      </div>
+
 
         <?php if (mysqli_num_rows($result) > 0): ?>
             <div class="table-responsive">
                 <table class="table table-striped table-hover table-bordered shadow-sm rounded">
-                    <thead class="thead-dark">
+                    <thead class="table-warning">
                         <tr class="text-center">
-                            <th>No</th>
+                            <th>#</th>
                             <th>Sub-Category Name</th>
                             <th>Category</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php
-                        $counter = 1; //initialize the number
-                    
-                        while ($row = mysqli_fetch_assoc($result)): ?>
+                        <?php $counter = 1; ?>
+                        <?php while ($row = mysqli_fetch_assoc($result)): ?>
                             <tr class="text-center">
                                 <td><?php echo $counter++; ?></td>
                                 <td><?php echo htmlspecialchars($row['sub_name']); ?></td>
                                 <td><?php echo htmlspecialchars($row['category_name']); ?></td>
                                 <td>
-                                    <a href="edit_sub_category.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm"
-                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Edit Sub-Category">
+                                    <!-- Edit Button -->
+                                    <a href="edit_sub_category.php?id=<?php echo $row['id']; ?>" 
+                                       class="btn btn-success btn-sm" 
+                                       data-bs-toggle="tooltip" 
+                                       data-bs-placement="top" 
+                                       title="Edit Sub-Category">
                                         <i class="fa fa-edit"></i> Edit
                                     </a>
 
-                                    <!-- Delete Trigger -->
-                                    <a href="#" class="btn btn-danger btn-sm" data-bs-toggle="modal"
-                                        data-bs-target="#deleteModal<?php echo $row['id']; ?>" title="Delete Sub-Category">
+                                    <!-- Delete Button (opens modal) -->
+                                    <a href="#" 
+                                       class="btn btn-danger btn-sm" 
+                                       data-bs-toggle="modal" 
+                                       data-bs-target="#deleteModal<?php echo $row['id']; ?>" 
+                                       title="Delete Sub-Category">
                                         <i class="fa fa-trash"></i> Delete
                                     </a>
 
                                     <!-- Delete Modal -->
                                     <div class="modal fade" id="deleteModal<?php echo $row['id']; ?>" tabindex="-1"
-                                        aria-labelledby="deleteModalLabel<?php echo $row['id']; ?>" aria-hidden="true">
+                                         aria-labelledby="deleteModalLabel<?php echo $row['id']; ?>" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-centered">
-                                            <!-- Added modal-dialog-centered here -->
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="deleteModalLabel<?php echo $row['id']; ?>">
                                                         Confirm Deletion
                                                     </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    Are you sure you want to delete the sub-category
+                                                    Are you sure you want to delete the sub-category 
                                                     <strong><?php echo htmlspecialchars($row['sub_name']); ?></strong>?
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" class="btn btn-secondary"
-                                                        data-bs-dismiss="modal">Cancel</button>
-                                                    <a href="delete_sub_category.php?id=<?php echo $row['id']; ?>"
-                                                        class="btn btn-danger">Yes, Delete</a>
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    <a href="delete_sub_category.php?id=<?php echo $row['id']; ?>" class="btn btn-danger">
+                                                        Yes, Delete
+                                                    </a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-
                                 </td>
                             </tr>
                         <?php endwhile; ?>
@@ -94,6 +99,7 @@ if (!$result) {
         <?php endif; ?>
     </div>
 </main>
+
 
 <!-- Bootstrap JS and Icons -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

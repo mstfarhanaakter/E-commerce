@@ -80,11 +80,9 @@
     <div class="collapse" id="categoriesCollapse">
       <nav class="nav flex-column ms-4 mt-2">
         <a href="add_category.php" class="nav-link d-flex align-items-center"><i class="fa fa-plus me-2"></i> Insert Category</a>
-        <a href="view_category.php" class="nav-link d-flex align-items-center"><i class="fa fa-eye me-2"></i> View Category</a>
-        <a href="all_category.php" class="nav-link d-flex align-items-center"><i class="fa fa-th-list me-2"></i> All Categories</a>
-        <a href="sub_category.php" class="nav-link d-flex align-items-center"><i class="fa fa-plus-circle me-2"></i> Insert Sub-category</a>
-        <a href="view_subcategory.php" class="nav-link d-flex align-items-center"><i class="fa fa-eye me-2"></i> View Sub-category</a>
-        <a href="all_sub_category.php" class="nav-link d-flex align-items-center"><i class="fa fa-th-list me-2"></i> All Sub-Categories</a>
+        <a href="view_category.php" class="nav-link d-flex align-items-center"><i class="fa fa-eye me-2"></i> View Status</a>
+        <a href="view_subcategory.php" class="nav-link d-flex align-items-center"><i class="fa fa-eye me-2"></i>Manage Categories</a>
+        
       </nav>
     </div>
 
@@ -104,6 +102,25 @@
         <a href="#" class="nav-link d-flex align-items-center"><i class="fa fa-cubes me-2"></i> Manage Inventory</a>
       </nav>
     </div>
+<!-- Coupon dropdown -->
+<button class="btn btn-toggle align-items-center mt-3 d-flex w-100"
+        data-bs-toggle="collapse"
+        data-bs-target="#couponsCollapse"
+        aria-expanded="false"
+        aria-controls="couponsCollapse">
+  <i class="fas fa-ticket-alt me-2"></i> Coupon
+  <i class="fas fa-chevron-down ms-auto"></i>
+</button>
+<div class="collapse" id="couponsCollapse">
+  <nav class="nav flex-column ms-4 mt-2">
+    <a href="cupon.php" class="nav-link d-flex align-items-center">
+      <i class="fas fa-plus-circle me-2"></i> Insert Coupon
+    </a>
+    <a href="manage_cupon.php" class="nav-link d-flex align-items-center">
+      <i class="fas fa-edit me-2"></i> Manage Coupon
+    </a>
+  </nav>
+</div>
 
     <!-- Orders dropdown -->
     <button class="btn btn-toggle align-items-center mt-3 d-flex w-100"

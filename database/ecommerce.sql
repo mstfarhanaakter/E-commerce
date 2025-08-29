@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2025 at 08:03 PM
+-- Generation Time: Aug 29, 2025 at 09:48 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -70,15 +70,21 @@ INSERT INTO `categories` (`id`, `name`, `status`, `created_at`, `updated_at`) VA
 
 CREATE TABLE `coupons` (
   `id` int(11) NOT NULL,
-  `code` varchar(255) DEFAULT NULL,
-  `percentage` decimal(5,2) DEFAULT NULL,
-  `valid_from` date DEFAULT NULL,
-  `valid_to` date DEFAULT NULL,
+  `cupon_title` varchar(255) DEFAULT NULL,
+  `cupon_code` varchar(255) DEFAULT NULL,
+  `cupon_price` decimal(5,2) DEFAULT NULL,
   `max_uses` int(11) DEFAULT NULL,
-  `use_count` int(11) DEFAULT NULL,
+  `product_id` int(11) NOT NULL,
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `coupons`
+--
+
+INSERT INTO `coupons` (`id`, `cupon_title`, `cupon_code`, `cupon_price`, `max_uses`, `product_id`, `created_at`, `updated_at`) VALUES
+(1, 'FREE', '1234', 500.00, 2, 12, '2025-08-30 01:25:17', '2025-08-30 01:25:17');
 
 -- --------------------------------------------------------
 
@@ -232,7 +238,7 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `user_id`, `name`, `images`, `price`, `old_price`, `description`, `category_id`, `sub_category_id`, `created_at`, `updated_at`) VALUES
-(12, 1, 'Desktops', 'products/desktop.jpg', 98000.00, 110000.00, 'This desktop can be used for heavy work load.', 15, 20, '2025-08-26 10:23:55', '2025-08-26 10:23:55'),
+(12, 1, 'Desktop', 'products/desktop.jpg', 98000.00, 110000.00, 'This desktop can be used for heavy work load.', 15, 20, '2025-08-26 10:23:55', '2025-08-26 10:23:55'),
 (13, 1, 'MakeUp', 'products/img_68ad3da735b8f1.81611727.png', 2000.00, 2200.00, 'This is best makup product.', 14, 23, '2025-08-26 10:52:55', '2025-08-26 10:52:55'),
 (16, 1, 'Smartphone', 'products/img_68ad44bc5b0964.98343124.png', 40000.00, 45000.00, 'This is the best smartphone in century.', 15, 22, '2025-08-26 11:23:08', '2025-08-26 11:23:08'),
 (22, 1, 'Bag', 'products/img_68aeb8eda88192.73280480.png', 3000.00, 3300.00, 'Stylish bag for women.', 12, 11, '2025-08-27 13:51:09', '2025-08-27 13:51:09'),
@@ -405,9 +411,7 @@ INSERT INTO `sub_category` (`id`, `name`, `category_id`, `created_at`, `updated_
 (23, 'Makeup', 14, '2025-08-25 23:59:44', '2025-08-25 23:59:44'),
 (24, 'Hair Care', 14, '2025-08-25 23:59:53', '2025-08-25 23:59:53'),
 (25, 'Skin Care', 14, '2025-08-26 00:00:03', '2025-08-26 00:00:03'),
-(26, 'Furniture', 16, '2025-08-26 00:00:26', '2025-08-26 00:00:26'),
-(27, 'Wall Mart', 16, '2025-08-26 00:00:34', '2025-08-26 00:00:34'),
-(28, 'Home Decor', 16, '2025-08-26 00:00:52', '2025-08-26 00:00:52');
+(30, 'Footware', 11, '2025-08-30 00:58:22', '2025-08-30 00:58:22');
 
 -- --------------------------------------------------------
 
@@ -524,7 +528,7 @@ ALTER TABLE `categories`
 --
 ALTER TABLE `coupons`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `code` (`code`);
+  ADD UNIQUE KEY `code` (`cupon_code`);
 
 --
 -- Indexes for table `coupon_usages`
@@ -716,7 +720,7 @@ ALTER TABLE `categories`
 -- AUTO_INCREMENT for table `coupons`
 --
 ALTER TABLE `coupons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `coupon_usages`
@@ -818,7 +822,7 @@ ALTER TABLE `sales_return`
 -- AUTO_INCREMENT for table `sub_category`
 --
 ALTER TABLE `sub_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `total_purchase`
