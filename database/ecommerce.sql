@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 28, 2025 at 08:31 AM
+-- Generation Time: Aug 29, 2025 at 08:03 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -234,9 +234,9 @@ CREATE TABLE `products` (
 INSERT INTO `products` (`id`, `user_id`, `name`, `images`, `price`, `old_price`, `description`, `category_id`, `sub_category_id`, `created_at`, `updated_at`) VALUES
 (12, 1, 'Desktops', 'products/desktop.jpg', 98000.00, 110000.00, 'This desktop can be used for heavy work load.', 15, 20, '2025-08-26 10:23:55', '2025-08-26 10:23:55'),
 (13, 1, 'MakeUp', 'products/img_68ad3da735b8f1.81611727.png', 2000.00, 2200.00, 'This is best makup product.', 14, 23, '2025-08-26 10:52:55', '2025-08-26 10:52:55'),
-(15, 1, 'Laptop', 'products/img_68ad419985e678.92102783.png', 56000.00, 58000.00, 'This is laptop', 15, 21, '2025-08-26 11:09:45', '2025-08-26 11:09:45'),
 (16, 1, 'Smartphone', 'products/img_68ad44bc5b0964.98343124.png', 40000.00, 45000.00, 'This is the best smartphone in century.', 15, 22, '2025-08-26 11:23:08', '2025-08-26 11:23:08'),
-(22, 1, 'Bag', 'products/img_68aeb8eda88192.73280480.png', 3000.00, 3300.00, 'Stylish bag for women.', 12, 11, '2025-08-27 13:51:09', '2025-08-27 13:51:09');
+(22, 1, 'Bag', 'products/img_68aeb8eda88192.73280480.png', 3000.00, 3300.00, 'Stylish bag for women.', 12, 11, '2025-08-27 13:51:09', '2025-08-27 13:51:09'),
+(23, 1, 'Watch', 'products/img_68b1e8c7e5e4a5.09019025.png', 3000.00, 3500.00, 'This is the stylist watch', 11, 12, '2025-08-29 23:52:07', '2025-08-29 23:52:07');
 
 -- --------------------------------------------------------
 
@@ -770,7 +770,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `purchase`
