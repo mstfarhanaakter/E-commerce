@@ -224,7 +224,6 @@
             color: #0b1020;
             font-weight: bold;
             text-decoration: none;
-            border: 1px solid grey;
             transition: 0.2s;
         }
 
@@ -308,8 +307,8 @@
                             <div class="content">
                                 <div class="title"><?= htmlspecialchars($product['name']) ?></div>
                                 <div class="price">
-                                    <div class="new">$<?= number_format($product['price'], 2) ?></div>
-                                    <div class="old">$<?= number_format($product['old_price'], 2) ?></div>
+                                    <div class="new font-bold">৳<?= number_format($product['price'], 2) ?></div>
+                                    <div class="old">৳<?= number_format($product['old_price'], 2) ?></div>
                                 </div>
                                 <div class="rating">
                                     <i class="fa-solid fa-star"></i>

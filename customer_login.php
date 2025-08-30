@@ -8,7 +8,7 @@ if (isset($_POST['submit'])) {
     $email = trim($_POST['email']);
     $password = $_POST['pass'];
 
-    // ইউজার ডেটা নিন, শুধু Customer role_id=2 এর জন্য
+    //for role id -2 
     $sql = "SELECT id, first_name, password FROM users WHERE email = ? AND role_id = 2";
     $stmt = $con->prepare($sql);
     $stmt->bind_param("s", $email);
