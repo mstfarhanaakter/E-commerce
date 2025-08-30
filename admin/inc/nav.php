@@ -26,7 +26,7 @@
         <li>
           <hr class="dropdown-divider" />
         </li>
-        <li><a class="dropdown-item" href="#"><i class="fa fa-sign-out-alt me-2"></i> Logout</a></li>
+        <li><a class="dropdown-item" href="./admin_logout.php"><i class="fa fa-sign-out-alt me-2"></i> Logout</a></li>
       </ul>
     </div>
   </header>

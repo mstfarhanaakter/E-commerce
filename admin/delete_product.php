@@ -1,4 +1,10 @@
 <?php
+session_start();
+// Redirect to login page if user is not logged in
+if (!isset($_SESSION['user_id'])) {
+    header("Location: index1.php"); // Or your login page path
+    exit;
+};
 require "../config/db.php";
 
 // Get product ID from URL
