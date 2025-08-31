@@ -133,7 +133,7 @@
     </button>
     <div class="collapse" id="ordersCollapse">
       <nav class="nav flex-column ms-4 mt-2">
-        <a href="#" class="nav-link d-flex align-items-center"><i class="fa fa-list me-2"></i> All Orders</a>
+        <a href="order.php" class="nav-link d-flex align-items-center"><i class="fa fa-list me-2"></i> All Orders</a>
         <a href="#" class="nav-link d-flex align-items-center"><i class="fa fa-hourglass-half me-2"></i> Pending</a>
         <a href="#" class="nav-link d-flex align-items-center"><i class="fa fa-check me-2"></i> Completed</a>
       </nav>

@@ -5,16 +5,29 @@ session_start();
 require "config/db.php";
 require "includes/he.php";
 
-require "includes/topbar_logged.php";
-require "includes/navbar_logged.php";
 
+$is_logged_in = isset($_SESSION['user_id']);
+
+if($is_logged_in){
+    require "includes/topbar_logged.php";
+    require "includes/navbar_logged.php";
+    // echo "<script>
+    //         alert('You are redirected to the login page!');
+    //       </script>";
+} else {
+    require "includes/topbar.php";
+    require "includes/navbar.php";
+};
+
+require "placeholder.php";
 require "includes/banner.php";
 require "includes/feature.php";
 require "includes/products.php";
 ?>
 
 
-<!-- php Heaader, topbar, navbar, banner, feature, category, products end -->
+<!-- Offer, Vendor HTML এখানে থাকবে -->
+
 
 
 
@@ -74,4 +87,5 @@ require "includes/products.php";
 
 <!-- footer start -->
 <?php require "includes/footer.php"; ?>
+
 <!-- footer end -->

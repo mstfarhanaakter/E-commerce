@@ -10,9 +10,9 @@
             </div>
         </div>
         <div class="col-lg-4 text-center my-2 my-lg-0">
-            <a href="" class="text-decoration-none">
-                <span class="h4 text-uppercase text-primary bg-dark px-2">Dora</span>
-                <span class="h4 text-uppercase text-dark bg-primary px-2 ml-n1">Mart</span>
+            <a href="index1.php?page=1" class="text-decoration-none">
+                <span class="h4 text-uppercase text-warning bg-dark px-2">Dora</span>
+                <span class="h4 text-uppercase text-dark bg-warning px-2 ml-n1">Mart</span>
             </a>
         </div>
         <div class="col-lg-4 text-right">

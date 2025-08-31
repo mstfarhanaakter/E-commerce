@@ -22,8 +22,8 @@ require "includes/navbar.php";
                 <p class="mx-md-5 px-5 animate__animated animate__bounceIn text-white">
                   Your store, your rules—start selling online today!
                 </p>
-                <a href="vendor_signup.php"
-                  class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp">Sign Up</a>
+                <a href="users/vendor_signup.php"
+                  class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp no-hover">Sign Up</a>
                 <!-- <a href="vendor_signin.php"
                   class="btn btn-outline-light py-2 px-4 mt-3 animate__animated animate__fadeInUp">Sign In</a> -->
               </div>
@@ -128,6 +128,12 @@ require "includes/navbar.php";
 
 <!-- Custom CSS -->
 <style>
+
+    * Remove hover background for this button */
+.no-hover:hover {
+    background-color: transparent !important;
+    color: white !important; /* Keep text color if needed */
+}
   .benefit-card {
     border: 2px solid transparent;
     transition: all 0.3s ease;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 29, 2025 at 09:48 PM
+-- Generation Time: Aug 31, 2025 at 07:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -242,7 +242,9 @@ INSERT INTO `products` (`id`, `user_id`, `name`, `images`, `price`, `old_price`,
 (13, 1, 'MakeUp', 'products/img_68ad3da735b8f1.81611727.png', 2000.00, 2200.00, 'This is best makup product.', 14, 23, '2025-08-26 10:52:55', '2025-08-26 10:52:55'),
 (16, 1, 'Smartphone', 'products/img_68ad44bc5b0964.98343124.png', 40000.00, 45000.00, 'This is the best smartphone in century.', 15, 22, '2025-08-26 11:23:08', '2025-08-26 11:23:08'),
 (22, 1, 'Bag', 'products/img_68aeb8eda88192.73280480.png', 3000.00, 3300.00, 'Stylish bag for women.', 12, 11, '2025-08-27 13:51:09', '2025-08-27 13:51:09'),
-(23, 1, 'Watch', 'products/img_68b1e8c7e5e4a5.09019025.png', 3000.00, 3500.00, 'This is the stylist watch', 11, 12, '2025-08-29 23:52:07', '2025-08-29 23:52:07');
+(23, 1, 'Wrist Watch', 'products/img_68b1e8c7e5e4a5.09019025.png', 3000.00, 3500.00, 'This is the stylist watch', 11, 12, '2025-08-29 23:52:07', '2025-08-29 23:52:07'),
+(26, 1, 'Bike', 'products/img_68b437f8f2dca8.00116399.jpg', 111111111.00, 1222222.00, 'This is fantasic bike', 13, 19, '2025-08-31 17:54:32', '2025-08-31 17:54:32'),
+(27, 1, 'Suit', 'products/img_68b438cd056226.51774531.jpg', 4500.00, 5000.00, 'For Boyes', 11, 10, '2025-08-31 17:58:05', '2025-08-31 17:58:05');
 
 -- --------------------------------------------------------
 
@@ -774,7 +776,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `purchase`

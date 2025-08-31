@@ -73,12 +73,12 @@ $categories_result = mysqli_query($con, "SELECT * FROM categories");
 </head>
 
 <body>
-    <main class="p-4">
+    <main class="p-2 mb-5">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-8 col-md-10">
                     <div class="card shadow-lg border-0">
-                        <div class="card-header bg-primary text-white">
+                        <div class="card-header bg-warning text-black">
                             <h4 class="mb-0 text-center">Add New Product</h4>
                         </div>
                         <div class="card-body">
@@ -112,7 +112,7 @@ $categories_result = mysqli_query($con, "SELECT * FROM categories");
 
                                 <div class="mb-3">
                                     <label for="description" class="form-label">Description</label>
-                                    <textarea class="form-control" name="description" id="description" rows="4"
+                                    <textarea class="form-control" name="description" id="description" rows="1"
                                         required></textarea>
                                 </div>
 
@@ -138,8 +138,9 @@ $categories_result = mysqli_query($con, "SELECT * FROM categories");
                                     </div>
                                 </div>
 
-                                <div class="d-grid">
-                                    <button type="submit" name="submit" class="btn btn-success">Add Product</button>
+                                <div class="d-flex justify-content-center align-middle gap-5">
+                                    <button type="submit" name="submit" class="btn btn-warning">Add Product</button>
+                                    <button type="reset" name="submit" class="btn btn-danger">Reset</button>
                                 </div>
                             </form>
                         </div>

@@ -28,12 +28,14 @@ foreach ($subcategories as $subcat) {
 }
 ?>
 
+bg-primary
+
 <!-- Dynamic Navbar Categories Start -->
 <div class="container-fluid bg-dark mb-30 sticky-top">
     <div class="row px-xl-5">
         <!-- Vertical Categories -->
         <div class="col-lg-3 d-none d-lg-block">
-            <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-bs-toggle="collapse"
+            <a class="btn d-flex align-items-center justify-content-between bg-warning w-100" data-bs-toggle="collapse"
                 href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
                 <h6 class="text-dark m-0"><i class="fa fa-bars me-2"></i>Categories</h6>
                 <i class="fa fa-angle-down text-dark"></i>
@@ -73,9 +75,9 @@ foreach ($subcategories as $subcat) {
         <!-- Main Navbar -->
         <div class="col-lg-9">
             <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
-                <a href="#" class="text-decoration-none d-block d-lg-none">
+                <a href="../index1.php?page=1" class="text-decoration-none d-block d-lg-none">
                     <span class="h1 text-uppercase text-dark bg-light px-2">Dora</span>
-                    <span class="h1 text-uppercase text-light bg-primary px-2 ms-n1">Mart</span>
+                    <span class="h1 text-uppercase text-light bg-warning px-2 ms-n1">Mart</span>
                 </a>
                 <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                     aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
@@ -84,7 +86,7 @@ foreach ($subcategories as $subcat) {
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <!-- Left links -->
                     <div class="navbar-nav me-auto py-0">
-                        <a href="index.html" class="nav-item nav-link active">Home</a>
+                        <a href="index1.php?page=2" class="nav-item nav-link active">Home</a>
                         <a href="shop.html" class="nav-item nav-link">Shop</a>
                         <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                         <div class="nav-item dropdown">
@@ -92,7 +94,7 @@ foreach ($subcategories as $subcat) {
                                 aria-expanded="false">Pages
                                 <i class="fa fa-angle-down mt-1"></i>
                             </a>
-                            <ul class="dropdown-menu bg-primary rounded-0 border-0 m-0">
+                            <ul class="dropdown-menu bg-warning rounded-0 border-0 m-0">
                                 <li><a href="#" class="dropdown-item">Shopping Cart</a></li>
                                 <li><a href="#" class="dropdown-item">Checkout</a></li>
                             </ul>
@@ -123,7 +125,7 @@ foreach ($subcategories as $subcat) {
                                     <i class="fas fa-id-card me-2"></i>My Account
                                     <i class="fa fa-angle-down mt-1"></i>
                                 </a>
-                                <ul class="dropdown-menu bg-primary rounded-0 border-0 m-0">
+                                <ul class="dropdown-menu bg-warning rounded-0 border-0 m-0">
                                     <li><a href="#" class="dropdown-item">
                                             <i class="fas fa-id-card me-2"></i>Edit Profile</a>
                                     </li>
@@ -136,7 +138,7 @@ foreach ($subcategories as $subcat) {
                                     <li><a href="#" class="dropdown-item">
                                             <i class="fas fa-times me-2"></i>My Returns & <br> Cancellations</a>
                                     </li>
-                                    <li><a href="./logout.php" class="dropdown-item">
+                                    <li><a href="users/logout.php?page=logout" class="dropdown-item">
                                             <i class="fas fa-sign-out-alt me-2"></i>Logout</a>
                                     </li>
                                 </ul>
