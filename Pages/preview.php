@@ -15,7 +15,7 @@ if($is_logged_in){
 };
 
 require "../placeholder.php";
-require "../includes/feature.php";
+
 
 
 
