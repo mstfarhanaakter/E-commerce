@@ -15,7 +15,9 @@ if($is_logged_in){
 require "placeholder.php";
 require "includes/banner.php";
 require "includes/feature.php";
-require "includes/products.php";
+// require "includes/products.php";
+require "includes/product_copy.php";
+
 ?>
 
 
