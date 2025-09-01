@@ -35,7 +35,7 @@ foreach ($subcategories as $subcat) {
         <div class="col-lg-3 d-none d-lg-block"> 
             <a class="btn d-flex align-items-center justify-content-between bg-warning w-100" data-bs-toggle="collapse"
                 href="#navbar-vertical" style="height: 65px;">
-                <h6 class="text-dark m-0"><i class="fa fa-bars me-2"></i>Categories</h6>
+                <h6 class="text-dark m-0 rounded-0"><i class="fa fa-bars me-2"></i>Categories</h6>
                 <i class="fa fa-angle-down text-dark"></i>
             </a>
             <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light"
