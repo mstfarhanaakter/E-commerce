@@ -4,15 +4,22 @@ require "../config/db.php";
 
 // Check if user is logged in
 $is_logged_in = isset($_SESSION['user_id']);
-$user_id = $is_logged_in ? $_SESSION['user_id'] : null;
+$user_id = $is_logged_in ? intval($_SESSION['user_id']) : 0;
 
-// Fetch cart and wishlist products
+// Fetch cart and wishlist products if logged in
 $user_cart_products = [];
 $user_wishlist_products = [];
-if ($is_logged_in) {
-    $cartResult = mysqli_query($con, "SELECT product_id FROM carts WHERE user_id = $user_id");
-    while ($row = mysqli_fetch_assoc($cartResult)) $user_cart_products[] = $row['product_id'];
+$user_cart_quantity = 0;
 
+if ($is_logged_in) {
+    // Cart
+    $cartResult = mysqli_query($con, "SELECT product_id, quantity FROM carts WHERE user_id = $user_id");
+    while ($row = mysqli_fetch_assoc($cartResult)) {
+        $user_cart_products[] = $row['product_id'];
+        $user_cart_quantity += intval($row['quantity']);
+    }
+
+    // Wishlist
     $wishlistResult = mysqli_query($con, "SELECT product_id FROM wishlist WHERE user_id = $user_id");
     while ($row = mysqli_fetch_assoc($wishlistResult)) $user_wishlist_products[] = $row['product_id'];
 }
@@ -27,13 +34,13 @@ $product = mysqli_fetch_assoc($result);
 $images = !empty($product['images']) ? explode(',', $product['images']) : [];
 
 require "../includes/he.php";
-if($is_logged_in){
+if ($is_logged_in) {
     require "../includes/topbar_logged.php";  
     require "../includes/navbar_logged.php";
 } else {
     require "../includes/topbar.php";        
     require "../includes/navbar.php";
-};
+}
 ?>
 
 <!DOCTYPE html>
@@ -114,9 +121,13 @@ if($is_logged_in){
                 <!-- Quantity + Add to Cart -->
                 <div class="d-flex align-items-center gap-2 mt-3">
                     <input type="number" class="form-control w-25" value="1" min="1">
-                    <a href="cart.php?add=<?= $product['id'] ?>" class="btn btn-primary">
-                        <i class="fa fa-shopping-cart me-1"></i> Add To Cart
+                    <a href="<?= $is_logged_in ? "cart.php?add={$product['id']}" : "../pages/signin.php" ?>" 
+                       class="btn btn-primary add-to-cart">
+                        <i class="fa fa-shopping-cart me-1"></i> <?= $is_logged_in ? "Add To Cart" : "Login to Add" ?>
                     </a>
+                    <button class="btn btn-outline-warning add-to-wishlist">
+                        <i class="<?= $is_logged_in ? 'far' : 'fas' ?> fa-heart me-1"></i> Wishlist
+                    </button>
                 </div>
             </div>
         </div>
@@ -127,6 +138,31 @@ if($is_logged_in){
 <?php require "../includes/footer.php"; ?>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../assets/js/main.js"></script>
+<script>
+const isLoggedIn = <?= $is_logged_in ? 'true' : 'false' ?>;
+const navbarCartBadge = document.getElementById('navbar-cart-badge');
+const navbarWishlistBadge = document.getElementById('navbar-wishlist-badge');
 
+document.querySelectorAll('.add-to-cart').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        if (!isLoggedIn) return; // Already handled via href
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerHTML = '<i class="fas fa-cart-plus"></i> Added';
+        if(navbarCartBadge) navbarCartBadge.textContent = parseInt(navbarCartBadge.textContent || 0) + 1;
+    });
+});
+
+document.querySelectorAll('.add-to-wishlist').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        if (!isLoggedIn) return window.location.href = '../pages/signin.php';
+        e.preventDefault();
+        const icon = btn.querySelector('i');
+        icon.classList.toggle('far');
+        icon.classList.toggle('fas');
+        if(navbarWishlistBadge) navbarWishlistBadge.textContent = parseInt(navbarWishlistBadge.textContent || 0) + 1;
+    });
+});
+</script>
 </body>
 </html>

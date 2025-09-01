@@ -1,88 +1,64 @@
 <?php
-// Start session and include DB connection
 // session_start();
 // require "../config/db.php"; 
 
-// Check database connection
-if (!$con) {
-    die("Database connection failed: " . mysqli_connect_error());
-}
+// ===============================
+// Check login
+// ===============================
+$is_logged_in = isset($_SESSION['user_id']);
+$user_id = $is_logged_in ? intval($_SESSION['user_id']) : 0;
 
 // ===============================
-// Fetch categories
+// Fetch categories & subcategories
 // ===============================
-$catQuery = "SELECT * FROM categories ORDER BY name";
-$catResult = mysqli_query($con, $catQuery);
 $categories = [];
+$subCatByCat = [];
+
+// Categories
+$catResult = mysqli_query($con, "SELECT * FROM categories ORDER BY name");
 if ($catResult && mysqli_num_rows($catResult) > 0) {
     while ($row = mysqli_fetch_assoc($catResult)) {
         $categories[] = $row;
     }
 }
 
-// ===============================
-// Fetch sub-categories
-// ===============================
-$subQuery = "SELECT * FROM sub_category ORDER BY category_id, name";
-$subResult = mysqli_query($con, $subQuery);
-$subcategories = [];
+// Subcategories
+$subResult = mysqli_query($con, "SELECT * FROM sub_category ORDER BY category_id, name");
 if ($subResult && mysqli_num_rows($subResult) > 0) {
     while ($row = mysqli_fetch_assoc($subResult)) {
-        $subcategories[] = $row;
+        $subCatByCat[$row['category_id']][] = $row;
     }
 }
-
-// Group subcategories by category_id
-$subCatByCat = [];
-foreach ($subcategories as $subcat) {
-    if (isset($subcat['category_id'])) {
-        $subCatByCat[$subcat['category_id']][] = $subcat;
-    }
-}
-
-// ===============================
-// User session check
-// ===============================
-$is_logged_in = isset($_SESSION['user_id']);
-$user_id = $is_logged_in ? intval($_SESSION['user_id']) : 0;
 
 // ===============================
 // Fetch cart & wishlist
 // ===============================
-$user_cart_products = [];
 $user_cart_quantity = 0;
+$user_cart_products = [];
 $user_wishlist_products = [];
 
 if ($is_logged_in && $user_id > 0) {
-    // Cart: sum quantity
-    $cartQuery = "SELECT product_id, quantity FROM carts WHERE user_id = $user_id";
-    $cartResult = mysqli_query($con, $cartQuery);
+    // Cart
+    $cartResult = mysqli_query($con, "SELECT product_id, quantity FROM carts WHERE user_id = $user_id");
     if ($cartResult && mysqli_num_rows($cartResult) > 0) {
-        while ($item = mysqli_fetch_assoc($cartResult)) {
-            $user_cart_products[] = $item['product_id'];
-            $user_cart_quantity += intval($item['quantity']);
+        while ($row = mysqli_fetch_assoc($cartResult)) {
+            $user_cart_products[] = $row['product_id'];
+            $user_cart_quantity += intval($row['quantity']);
         }
     }
 
     // Wishlist
-    $wishlistQuery = "SELECT product_id FROM wishlist WHERE user_id = $user_id";
-    $wishlistResult = mysqli_query($con, $wishlistQuery);
+    $wishlistResult = mysqli_query($con, "SELECT product_id FROM wishlist WHERE user_id = $user_id");
     if ($wishlistResult && mysqli_num_rows($wishlistResult) > 0) {
-        while ($item = mysqli_fetch_assoc($wishlistResult)) {
-            $user_wishlist_products[] = $item['product_id'];
+        while ($row = mysqli_fetch_assoc($wishlistResult)) {
+            $user_wishlist_products[] = $row['product_id'];
         }
     }
 }
-
-// ===============================
-// Fetch products
-// ===============================
-$productQuery = "SELECT * FROM products ORDER BY id DESC";
-$productResult = mysqli_query($con, $productQuery);
 ?>
 
 <!-- Navbar Start -->
-<div class="container-fluid bg-dark mb-30 sticky-top">
+<div class="container-fluid bg-dark mb-3 sticky-top">
     <div class="row px-xl-5">
         <!-- Vertical Categories -->
         <div class="col-lg-3 d-none d-lg-block">
@@ -128,7 +104,6 @@ $productResult = mysqli_query($con, $productQuery);
                 </button>
 
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                    <!-- Left links -->
                     <div class="navbar-nav me-auto py-0">
                         <a href="index1.php?page=2" class="nav-item nav-link active">Home</a>
                         <a href="shop.html" class="nav-item nav-link">Shop</a>
@@ -158,7 +133,6 @@ $productResult = mysqli_query($con, $productQuery);
                             </span>
                         </button>
 
-
                         <!-- Cart -->
                         <button class="btn px-2 position-relative navbar-cart">
                             <i class="fas fa-shopping-cart text-warning fs-5"></i>
@@ -178,20 +152,16 @@ $productResult = mysqli_query($con, $productQuery);
                                     <i class="fa fa-angle-down mt-1"></i>
                                 </a>
                                 <ul class="dropdown-menu bg-warning rounded-0 border-0 m-0">
-                                    <li><a href="#" class="dropdown-item"><i class="fas fa-id-card me-2"></i>Edit
-                                            Profile</a></li>
-                                    <li><a href="#" class="dropdown-item"><i class="fas fa-box me-2"></i>My Orders</a>
-                                    </li>
-                                    <li><a href="#" class="dropdown-item"><i class="fas fa-heart me-2"></i>My
-                                            Wishlist</a></li>
-                                    <li><a href="#" class="dropdown-item"><i class="fas fa-times me-2"></i>My Returns &
-                                            <br> Cancellations</a></li>
-                                    <li><a href="users/logout.php?page=logout" class="dropdown-item"><i
-                                                class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                                    <li><a href="#" class="dropdown-item"><i class="fas fa-id-card me-2"></i>Edit Profile</a></li>
+                                    <li><a href="#" class="dropdown-item"><i class="fas fa-box me-2"></i>My Orders</a></li>
+                                    <li><a href="#" class="dropdown-item"><i class="fas fa-heart me-2"></i>My Wishlist</a></li>
+                                    <li><a href="#" class="dropdown-item"><i class="fas fa-times me-2"></i>My Returns & <br> Cancellations</a></li>
+                                    <li><a href="users/logout.php?page=logout" class="dropdown-item"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                                 </ul>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </nav>
         </div>

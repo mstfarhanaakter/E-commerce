@@ -2,23 +2,12 @@
 session_start();
 require "../config/db.php";
 
-// for login session 
+// ---------------- Login session ----------------
 $is_logged_in = isset($_SESSION['user_id']);
-require "../includes/he.php";
-if($is_logged_in){
-    require "../includes/topbar_logged.php";  // for login users
-    require "../includes/navbar_logged.php";
-} else {
-    require "../includes/topbar.php";        // for non-login users
-    require "../includes/navbar.php";
-};
-
-require "../placeholder.php";
 
 // ---------------- Add to cart ----------------
 if (isset($_GET['add'])) {
     $product_id = intval($_GET['add']);
-
     $query = "SELECT * FROM products WHERE id = $product_id";
     $result = mysqli_query($con, $query);
     $product = mysqli_fetch_assoc($result);
@@ -27,7 +16,6 @@ if (isset($_GET['add'])) {
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
-
         if (isset($_SESSION['cart'][$product_id])) {
             $_SESSION['cart'][$product_id]['quantity'] += 1;
         } else {
@@ -39,6 +27,8 @@ if (isset($_GET['add'])) {
             ];
         }
     }
+    header("Location: cart.php");
+    exit;
 }
 
 // ---------------- Update Quantity ----------------
@@ -76,6 +66,18 @@ if (!empty($_SESSION['cart'])) {
 }
 $shipping = ($subtotal > 0) ? 50 : 0; // flat shipping fee
 $total = $subtotal + $shipping;
+
+// ---------------- Include header/nav ----------------
+require "../includes/he.php";
+if($is_logged_in){
+    require "../includes/topbar_logged.php";
+    require "../includes/navbar_logged.php";
+} else {
+    require "../includes/topbar.php";
+    require "../includes/navbar.php";
+}
+
+require "../placeholder.php";
 ?>
 
 <!DOCTYPE html>
