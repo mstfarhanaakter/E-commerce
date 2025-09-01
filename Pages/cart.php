@@ -57,6 +57,25 @@ if (isset($_GET['remove'])) {
     exit;
 }
 
+// ---------------- Apply Coupon ----------------
+$coupon_discount = 0;
+$coupon_message = "";
+if (isset($_POST['apply_coupon'])) {
+    $coupon_code = mysqli_real_escape_string($con, $_POST['coupon_code']);
+    $query = "SELECT cupon_price FROM coupons WHERE cupon_title = '$coupon_code' LIMIT 1";
+    $result = mysqli_query($con, $query);
+
+    if (mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $coupon_discount = $row['cupon_price'];
+        $_SESSION['coupon_discount'] = $coupon_discount;
+        $coupon_message = "Coupon applied! You saved ৳" . number_format($coupon_discount,2);
+    } else {
+        $_SESSION['coupon_discount'] = 0;
+        $coupon_message = "Invalid coupon code!";
+    }
+}
+
 // ---------------- Calculate totals ----------------
 $subtotal = 0;
 if (!empty($_SESSION['cart'])) {
@@ -65,7 +84,10 @@ if (!empty($_SESSION['cart'])) {
     }
 }
 $shipping = ($subtotal > 0) ? 50 : 0; // flat shipping fee
-$total = $subtotal + $shipping;
+
+// Apply coupon discount if any
+$coupon_discount = $_SESSION['coupon_discount'] ?? 0;
+$total = $subtotal + $shipping - $coupon_discount;
 
 // ---------------- Include header/nav ----------------
 require "../includes/he.php";
@@ -138,14 +160,21 @@ require "../placeholder.php";
 
         <!-- Cart Summary -->
         <div class="col-lg-4">
-            <form class="mb-30">
+            <!-- Coupon Form -->
+            <form method="POST" class="mb-30">
                 <div class="input-group">
-                    <input type="text" class="form-control border-0 p-4" placeholder="Coupon Code">
+                    <input type="text" name="coupon_code" class="form-control border-0 p-4" placeholder="Coupon Code" required>
                     <div class="input-group-append">
-                        <button class="btn btn-primary">Apply Coupon</button>
+                        <button type="submit" name="apply_coupon" class="btn btn-primary">Apply Coupon</button>
                     </div>
                 </div>
+                <?php if(!empty($coupon_message)): ?>
+                    <div class="mt-2 alert <?= ($coupon_discount > 0) ? 'alert-success' : 'alert-danger'; ?>">
+                        <?= htmlspecialchars($coupon_message); ?>
+                    </div>
+                <?php endif; ?>
             </form>
+
             <h5 class="section-title position-relative text-uppercase mb-3">
                 <span class="bg-secondary pr-3">Cart Summary</span>
             </h5>
@@ -159,6 +188,12 @@ require "../placeholder.php";
                         <h6 class="font-weight-medium">Shipping</h6>
                         <h6 class="font-weight-medium">৳<?= number_format($shipping,2); ?></h6>
                     </div>
+                    <?php if($coupon_discount > 0): ?>
+                        <div class="d-flex justify-content-between mt-2">
+                            <h6>Coupon Discount</h6>
+                            <h6>- ৳<?= number_format($coupon_discount,2); ?></h6>
+                        </div>
+                    <?php endif; ?>
                 </div>
                 <div class="pt-2">
                     <div class="d-flex justify-content-between mt-2">
