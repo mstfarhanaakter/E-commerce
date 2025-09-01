@@ -15,22 +15,19 @@ if($is_logged_in){
 
 require "../placeholder.php";
 
-// Add to cart
+// ---------------- Add to cart ----------------
 if (isset($_GET['add'])) {
     $product_id = intval($_GET['add']);
 
-    // Fetch product info from DB
     $query = "SELECT * FROM products WHERE id = $product_id";
     $result = mysqli_query($con, $query);
     $product = mysqli_fetch_assoc($result);
 
     if ($product) {
-        // Create cart if not exists
         if (!isset($_SESSION['cart'])) {
             $_SESSION['cart'] = [];
         }
 
-        // Check if product already in cart
         if (isset($_SESSION['cart'][$product_id])) {
             $_SESSION['cart'][$product_id]['quantity'] += 1;
         } else {
@@ -42,20 +39,51 @@ if (isset($_GET['add'])) {
             ];
         }
     }
-
-    // Redirect back to cart page
-    // header("Location: cart.php");
-    // exit;
 }
-?>
 
+// ---------------- Update Quantity ----------------
+if (isset($_GET['update'])) {
+    $id = intval($_GET['update']);
+    $action = $_GET['action'] ?? "";
+
+    if (isset($_SESSION['cart'][$id])) {
+        if ($action === "plus") {
+            $_SESSION['cart'][$id]['quantity'] += 1;
+        } elseif ($action === "minus" && $_SESSION['cart'][$id]['quantity'] > 1) {
+            $_SESSION['cart'][$id]['quantity'] -= 1;
+        }
+    }
+    header("Location: cart.php");
+    exit;
+}
+
+// ---------------- Remove item ----------------
+if (isset($_GET['remove'])) {
+    $id = intval($_GET['remove']);
+    if (isset($_SESSION['cart'][$id])) {
+        unset($_SESSION['cart'][$id]);
+    }
+    header("Location: cart.php");
+    exit;
+}
+
+// ---------------- Calculate totals ----------------
+$subtotal = 0;
+if (!empty($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $item) {
+        $subtotal += $item['price'] * $item['quantity'];
+    }
+}
+$shipping = ($subtotal > 0) ? 50 : 0; // flat shipping fee
+$total = $subtotal + $shipping;
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= htmlspecialchars($product['name']); ?> | Product Details</title>
+    <title>Cart</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link href="../assets/css/style.css" rel="stylesheet">
@@ -87,10 +115,10 @@ if (isset($_GET['add'])) {
                                 </td>
                                 <td class="align-middle">৳<?= number_format($item['price'],2); ?></td>
                                 <td class="align-middle">
-                                    <div class="input-group quantity mx-auto" style="width: 100px;">
-                                        <button class="btn btn-sm btn-primary btn-minus">-</button>
-                                        <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="<?= $item['quantity']; ?>">
-                                        <button class="btn btn-sm btn-primary btn-plus">+</button>
+                                    <div class="input-group quantity mx-auto" style="width: 120px;">
+                                        <a href="cart.php?update=<?= $id ?>&action=minus" class="btn btn-sm btn-primary">-</a>
+                                        <input type="text" class="form-control form-control-sm bg-secondary border-0 text-center" value="<?= $item['quantity']; ?>" readonly>
+                                        <a href="cart.php?update=<?= $id ?>&action=plus" class="btn btn-sm btn-primary">+</a>
                                     </div>
                                 </td>
                                 <td class="align-middle">৳<?= number_format($item['price'] * $item['quantity'],2); ?></td>
@@ -142,28 +170,9 @@ if (isset($_GET['add'])) {
     </div>
 </div>
 <!-- Cart End -->
-            
-
-<!-- remove cart -->
-
-<?php
-if (isset($_GET['remove'])) {
-    $id = intval($_GET['remove']);
-    if (isset($_SESSION['cart'][$id])) {
-        unset($_SESSION['cart'][$id]);
-    }
-    // header("Location: cart.php");
-    // exit;
-}
-?>
 
 <?php require "../includes/footer.php"; ?>
-    <script src="../assets/js/main.js"></script>
-    
-    
-
-
-
+<script src="../assets/js/main.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
