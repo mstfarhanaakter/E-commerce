@@ -190,8 +190,8 @@ require "../placeholder.php";
                     </div>
                     <?php if($coupon_discount > 0): ?>
                         <div class="d-flex justify-content-between mt-2">
-                            <h6>Coupon Discount</h6>
-                            <h6>- ৳<?= number_format($coupon_discount,2); ?></h6>
+                            <h6 class="text-success">Coupon Discount</h6>
+                            <h6 class="text-success">- ৳<?= number_format($coupon_discount,2); ?></h6>
                         </div>
                     <?php endif; ?>
                 </div>
@@ -200,7 +200,7 @@ require "../placeholder.php";
                         <h5>Total</h5>
                         <h5>৳<?= number_format($total,2); ?></h5>
                     </div>
-                    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3">Proceed To Checkout</button>
+                    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3"><a href="payment.php" class="text-decoration-none text-black text-bold">Proceed To Checkout</a></button>
                 </div>
             </div>
         </div>
