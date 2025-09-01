@@ -20,7 +20,7 @@ if (isset($_POST["submit"])) {
 
             // Login successful: JS alert + redirect
             echo "<script>
-                alert('Welcome, " . htmlspecialchars($row['first_name']) . "!');
+                alert('Welcome into the admin panel, " . htmlspecialchars($row['first_name']) . "!');
                 window.location.href = 'main.php';
             </script>";
             exit();

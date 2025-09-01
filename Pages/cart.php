@@ -200,7 +200,7 @@ require "../placeholder.php";
                         <h5>Total</h5>
                         <h5>৳<?= number_format($total,2); ?></h5>
                     </div>
-                    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3"><a href="payment.php" class="text-decoration-none text-black text-bold">Proceed To Checkout</a></button>
+                    <button class="btn btn-block btn-primary font-weight-bold my-3 py-3"><a href="checkout.php" class="text-decoration-none text-black text-bold">Proceed To Checkout</a></button>
                 </div>
             </div>
         </div>

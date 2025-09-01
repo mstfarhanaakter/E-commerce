@@ -153,7 +153,7 @@ if ($is_logged_in && $user_id > 0) {
                                 </a>
                                 <ul class="dropdown-menu bg-warning rounded-0 border-0 m-0">
                                     <li><a href="#" class="dropdown-item"><i class="fas fa-id-card me-2"></i>Edit Profile</a></li>
-                                    <li><a href="#" class="dropdown-item"><i class="fas fa-box me-2"></i>My Orders</a></li>
+                                    <li><a href="pages/my_orders.php" class="dropdown-item"><i class="fas fa-box me-2"></i>My Orders</a></li>
                                     <li><a href="#" class="dropdown-item"><i class="fas fa-heart me-2"></i>My Wishlist</a></li>
                                     <li><a href="#" class="dropdown-item"><i class="fas fa-times me-2"></i>My Returns & <br> Cancellations</a></li>
                                     <li><a href="users/logout.php?page=logout" class="dropdown-item"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
