@@ -106,9 +106,9 @@ if ($is_logged_in && $user_id > 0) {
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav me-auto py-0">
                         <a href="index1.php?page=2" class="nav-item nav-link active">Home</a>
-                        <a href="shop.html" class="nav-item nav-link">Shop</a>
-                        <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
-                        <div class="nav-item dropdown">
+                        <!-- <a href="shop.html" class="nav-item nav-link">Shop</a> -->
+                        <!-- <a href="detail.html" class="nav-item nav-link">Shop Detail</a> -->
+                        <!-- <div class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"
                                 aria-expanded="false">Pages
                                 <i class="fa fa-angle-down mt-1"></i>
@@ -117,7 +117,7 @@ if ($is_logged_in && $user_id > 0) {
                                 <li><a href="#" class="dropdown-item">Shopping Cart</a></li>
                                 <li><a href="#" class="dropdown-item">Checkout</a></li>
                             </ul>
-                        </div>
+                        </div> -->
                         <a href="contact.php" class="nav-item nav-link">Contact</a>
                     </div>
 
@@ -155,7 +155,7 @@ if ($is_logged_in && $user_id > 0) {
                                     <li><a href="#" class="dropdown-item"><i class="fas fa-id-card me-2"></i>Edit Profile</a></li>
                                     <li><a href="pages/my_orders.php" class="dropdown-item"><i class="fas fa-box me-2"></i>My Orders</a></li>
                                     <li><a href="#" class="dropdown-item"><i class="fas fa-heart me-2"></i>My Wishlist</a></li>
-                                    <li><a href="#" class="dropdown-item"><i class="fas fa-times me-2"></i>My Returns & <br> Cancellations</a></li>
+                                    <li><a href="pages/mycancel.php" class="dropdown-item"><i class="fas fa-times me-2"></i>My Returns & <br> Cancellations</a></li>
                                     <li><a href="users/logout.php?page=logout" class="dropdown-item"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
                                 </ul>
                             </div>

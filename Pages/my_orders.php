@@ -2,6 +2,7 @@
 session_start();
 require "../config/db.php";
 
+// Redirect to login if not logged in
 if (!isset($_SESSION['user_id'])) {
     header("Location: login.php");
     exit;
@@ -9,20 +10,23 @@ if (!isset($_SESSION['user_id'])) {
 
 $user_id = $_SESSION['user_id'];
 
-// Handle order cancellation
+// ---------------- Handle order cancellation ----------------
 if (isset($_GET['cancel_order'])) {
     $order_id = intval($_GET['cancel_order']);
-    // Only allow cancelling pending orders for this user
     $stmt = $con->prepare("UPDATE orders SET order_status='Cancelled' WHERE id=? AND user_id=? AND order_status='Pending'");
     $stmt->bind_param("ii", $order_id, $user_id);
     $stmt->execute();
-    header("Location: my_orders.php");
+    $stmt->close();
+
+    header("Location: my_orders.php?cancelled=1");
     exit;
 }
 
-// Fetch all orders of this user
-$query = "SELECT * FROM orders WHERE user_id = ? ORDER BY order_date DESC";
-$stmt = $con->prepare($query);
+// ---------------- Show success alert if order cancelled ----------------
+$show_alert = isset($_GET['cancelled']) && $_GET['cancelled'] == 1;
+
+// ---------------- Fetch active orders ----------------
+$stmt = $con->prepare("SELECT id, due_amount, qty, order_date, order_status FROM orders WHERE user_id=? AND order_status != 'Cancelled' ORDER BY order_date DESC");
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -46,13 +50,20 @@ require "../includes/navbar_logged.php";
 
 <div class="container mt-5">
     <h2 class="mb-4">My Orders</h2>
-    
+
+    <?php if ($show_alert): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            Order cancelled successfully.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif; ?>
+
     <?php if ($result->num_rows > 0): ?>
-        <table class="table table-bordered table-striped">
+        <table class="table table-bordered table-striped text-center">
             <thead class="table-warning">
                 <tr>
-                    <th>Invoice No</th>
-                    <th>Due Amount</th>
+                    <th>#</th>
+                    <th>Total Amount</th>
                     <th>Quantity</th>
                     <th>Order Date</th>
                     <th>Status</th>
@@ -60,10 +71,11 @@ require "../includes/navbar_logged.php";
                 </tr>
             </thead>
             <tbody>
+                <?php $count = 1; ?>
                 <?php while ($row = $result->fetch_assoc()): ?>
                     <tr>
-                        <td><?= htmlspecialchars($row['invoice_no']); ?></td>
-                        <td>৳<?= number_format($row['due_amount'], 2); ?></td>
+                        <td><?= $count++; ?></td>
+                        <td><b>৳</b><?= number_format($row['due_amount'], 2); ?></td>
                         <td><?= $row['qty']; ?></td>
                         <td><?= date("d M Y, h:i A", strtotime($row['order_date'])); ?></td>
                         <td>
@@ -72,12 +84,12 @@ require "../includes/navbar_logged.php";
                             <?php elseif ($row['order_status'] == 'Completed'): ?>
                                 <span class="badge bg-success">Completed</span>
                             <?php else: ?>
-                                <span class="badge bg-danger">Cancelled</span>
+                                <span class="badge bg-secondary"><?= htmlspecialchars($row['order_status']); ?></span>
                             <?php endif; ?>
                         </td>
                         <td>
                             <?php if ($row['order_status'] == 'Pending'): ?>
-                                <a href="my_orders.php?cancel_order=<?= $row['id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel</a>
+                                <a href="my_orders.php?cancel_order=<?= intval($row['id']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to cancel this order?');">Cancel</a>
                             <?php else: ?>
                                 <span class="text-muted">N/A</span>
                             <?php endif; ?>
@@ -87,7 +99,7 @@ require "../includes/navbar_logged.php";
             </tbody>
         </table>
     <?php else: ?>
-        <div class="alert alert-info">You haven’t placed any orders yet.</div>
+        <div class="alert alert-info">You haven’t placed any active orders yet.</div>
     <?php endif; ?>
 </div>
 
