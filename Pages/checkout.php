@@ -43,6 +43,6 @@ unset($_SESSION['coupon_discount']);
 // Alert and redirect
 echo "<script>
     alert('Your order has been placed!');
-    window.location.href='index1.php';
+    window.location.href='../main.php';
 </script>";
 ?>
