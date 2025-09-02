@@ -85,6 +85,7 @@ require "inc/mobile_sidebar.php";
                 <thead class="table-warning">
                     <tr>
                         <th>#</th>
+                        <th>Invoice No</th>
                         <th>User Name</th>
                         <th>Quantity</th>
                         <th>Due Amount</th>
@@ -98,6 +99,19 @@ require "inc/mobile_sidebar.php";
                     <?php while ($order = mysqli_fetch_assoc($result)): ?>
                         <tr>
                             <td><?= $count++; ?></td>
+
+                            <!-- Generate/display invoice number -->
+                            <td>
+                                <?php
+                                $invoice = $order['invoice_no'];
+                                if (empty($invoice)) {
+                                    // Generate a random invoice number (e.g., INV-2025-XXXX)
+                                    $invoice = 'INV-2025-' . str_pad(rand(1, 9999), 4, '0', STR_PAD_LEFT);
+                                }
+                                echo htmlspecialchars($invoice);
+                                ?>
+                            </td>
+
                             <td><?= htmlspecialchars($order['user_name']); ?></td>
 
                             <?php if (isset($_GET['edit_id']) && $_GET['edit_id'] == $order['order_id']): ?>
