@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 31, 2025 at 07:02 PM
+-- Generation Time: Sep 02, 2025 at 05:38 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -172,14 +172,20 @@ CREATE TABLE `inventory` (
 
 CREATE TABLE `orders` (
   `id` int(11) NOT NULL,
-  `order_date` datetime DEFAULT NULL,
-  `total_price` decimal(15,2) DEFAULT NULL,
   `user_id` int(11) DEFAULT NULL,
-  `payment_id` int(11) DEFAULT NULL,
-  `status` varchar(255) DEFAULT NULL,
-  `created_at` datetime DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp()
+  `due_amount` decimal(10,2) DEFAULT NULL,
+  `invoice_no` varchar(20) DEFAULT NULL,
+  `qty` int(11) DEFAULT NULL,
+  `order_date` datetime DEFAULT NULL,
+  `order_status` enum('Pending','Completed','Cancelling') DEFAULT 'Pending'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `orders`
+--
+
+INSERT INTO `orders` (`id`, `user_id`, `due_amount`, `invoice_no`, `qty`, `order_date`, `order_status`) VALUES
+(1, 1, 252550.00, 'INV3143', 2, '2025-09-02 09:36:44', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -243,7 +249,7 @@ INSERT INTO `products` (`id`, `user_id`, `name`, `images`, `price`, `old_price`,
 (16, 1, 'Smartphone', 'products/img_68ad44bc5b0964.98343124.png', 40000.00, 45000.00, 'This is the best smartphone in century.', 15, 22, '2025-08-26 11:23:08', '2025-08-26 11:23:08'),
 (22, 1, 'Bag', 'products/img_68aeb8eda88192.73280480.png', 3000.00, 3300.00, 'Stylish bag for women.', 12, 11, '2025-08-27 13:51:09', '2025-08-27 13:51:09'),
 (23, 1, 'Wrist Watch', 'products/img_68b1e8c7e5e4a5.09019025.png', 3000.00, 3500.00, 'This is the stylist watch', 11, 12, '2025-08-29 23:52:07', '2025-08-29 23:52:07'),
-(26, 1, 'Bike', 'products/img_68b437f8f2dca8.00116399.jpg', 111111111.00, 1222222.00, 'This is fantasic bike', 13, 19, '2025-08-31 17:54:32', '2025-08-31 17:54:32'),
+(26, 1, 'Bike', 'products/img_68b437f8f2dca8.00116399.jpg', 250000.00, 275000.00, 'Stylish bike', 13, 19, '2025-08-31 17:54:32', '2025-08-31 17:54:32'),
 (27, 1, 'Suit', 'products/img_68b438cd056226.51774531.jpg', 4500.00, 5000.00, 'For Boyes', 11, 10, '2025-08-31 17:58:05', '2025-08-31 17:58:05');
 
 -- --------------------------------------------------------
@@ -573,8 +579,7 @@ ALTER TABLE `inventory`
 --
 ALTER TABLE `orders`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `customer_id` (`user_id`),
-  ADD KEY `payment_id` (`payment_id`);
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `order_items`
@@ -758,7 +763,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `order_items`
@@ -902,8 +907,7 @@ ALTER TABLE `inventory`
 -- Constraints for table `orders`
 --
 ALTER TABLE `orders`
-  ADD CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `customers` (`id`),
-  ADD CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`payment_id`) REFERENCES `payments` (`id`);
+  ADD CONSTRAINT `user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `order_items`
