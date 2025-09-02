@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 02, 2025 at 05:38 AM
+-- Generation Time: Sep 02, 2025 at 06:49 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -185,7 +185,13 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`id`, `user_id`, `due_amount`, `invoice_no`, `qty`, `order_date`, `order_status`) VALUES
-(1, 1, 252550.00, 'INV3143', 2, '2025-09-02 09:36:44', 'Pending');
+(1, 1, 252550.00, 'INV3143', 2, '2025-09-02 09:36:44', 'Pending'),
+(2, 4, 3050.00, 'INV7562', 1, '2025-09-02 09:43:18', 'Completed'),
+(3, 1, 1850.00, 'INV6749', 1, '2025-09-02 10:17:55', 'Pending'),
+(4, 4, 1050.00, 'INV3749', 1, '2025-09-02 10:22:14', 'Completed'),
+(5, 4, 5550.00, 'INV9036', 2, '2025-09-02 10:25:35', ''),
+(6, 4, 7050.00, 'INV7669', 2, '2025-09-02 10:34:55', 'Pending'),
+(7, 4, 1850.00, 'INV4675', 1, '2025-09-02 10:43:37', 'Pending');
 
 -- --------------------------------------------------------
 
@@ -250,7 +256,9 @@ INSERT INTO `products` (`id`, `user_id`, `name`, `images`, `price`, `old_price`,
 (22, 1, 'Bag', 'products/img_68aeb8eda88192.73280480.png', 3000.00, 3300.00, 'Stylish bag for women.', 12, 11, '2025-08-27 13:51:09', '2025-08-27 13:51:09'),
 (23, 1, 'Wrist Watch', 'products/img_68b1e8c7e5e4a5.09019025.png', 3000.00, 3500.00, 'This is the stylist watch', 11, 12, '2025-08-29 23:52:07', '2025-08-29 23:52:07'),
 (26, 1, 'Bike', 'products/img_68b437f8f2dca8.00116399.jpg', 250000.00, 275000.00, 'Stylish bike', 13, 19, '2025-08-31 17:54:32', '2025-08-31 17:54:32'),
-(27, 1, 'Suit', 'products/img_68b438cd056226.51774531.jpg', 4500.00, 5000.00, 'For Boyes', 11, 10, '2025-08-31 17:58:05', '2025-08-31 17:58:05');
+(27, 1, 'Suit', 'products/img_68b438cd056226.51774531.jpg', 4500.00, 5000.00, 'For Boyes', 11, 10, '2025-08-31 17:58:05', '2025-08-31 17:58:05'),
+(28, 1, 'T-shirt', 'products/img_68b66ec427efd6.57977329.png', 1500.00, 1800.00, 'Stylist T-shirt for men', 11, 10, '2025-09-02 10:12:52', '2025-09-02 10:12:52'),
+(29, 1, 'Shoe', 'products/img_68b66fd7ab36c8.14093424.png', 2300.00, 2500.00, 'Stylist shoe', 11, 30, '2025-09-02 10:17:27', '2025-09-02 10:17:27');
 
 -- --------------------------------------------------------
 
@@ -482,7 +490,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `first_name`, `last_name`, `email`, `password`, `address`, `phone_number`, `role_id`, `is_approved`, `created_at`, `updated_at`, `reset_token`, `token_expire`) VALUES
 (1, 'Farhana', 'Shetu', 'farhana@gmail.com', '$2y$10$S1IUS6nvdK3OPr5ASkcUDu8ChFC1yngqbD0uyko/NPBfal.0q3ivq', NULL, NULL, 1, 0, '2025-08-20 01:53:19', '2025-08-20 01:53:19', '5c778baa8dbc815118834b68671415f946e92bf0446db93d3ea6ce5496221691d370cad67095fa70a08e78cb966525b74983', '2025-08-19 23:37:51'),
 (2, 'Shetu', 'Akon', 'shetu@gmail.com', '$2y$10$MwSsvLMlKZtN6nhEBSXPquFuzD7dMSA9b8zZAYwyVLHmvk4.nWDay', NULL, NULL, 2, 0, '2025-08-27 11:00:46', '2025-08-27 11:00:46', NULL, NULL),
-(3, 'Sobita', 'Ray', 'sobita@gmail.com', '$2y$10$VS6taq5rgapmJjLA4fu7u.MXee/E9oXV3nFF.p0hdYZCgnX11o1ee', NULL, NULL, 3, 0, '2025-08-27 11:40:59', '2025-08-27 11:40:59', NULL, NULL);
+(3, 'Sobita', 'Ray', 'sobita@gmail.com', '$2y$10$VS6taq5rgapmJjLA4fu7u.MXee/E9oXV3nFF.p0hdYZCgnX11o1ee', NULL, NULL, 3, 0, '2025-08-27 11:40:59', '2025-08-27 11:40:59', NULL, NULL),
+(4, 'Sharmin', 'Akter', 'sharmin@gmail.com', '$2y$10$tW8.1No7JFGzCBbHNYeMzuitFchc43bxCMreo5526RqHSLJTltm4G', NULL, NULL, 2, 0, '2025-09-02 09:42:48', '2025-09-02 09:42:48', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -763,7 +772,7 @@ ALTER TABLE `inventory`
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `order_items`
@@ -781,7 +790,7 @@ ALTER TABLE `payments`
 -- AUTO_INCREMENT for table `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `purchase`
@@ -847,7 +856,7 @@ ALTER TABLE `total_sales`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `vendors`
